@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import {
+    BrowserRouter as Router,
+    Route,
+    Routes,
+    Navigate,
+} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import MainNavigation from "./Navigation/MainNavigation";
+import Search from "./Search/Search";
+import LoadingSpinner from "./UIElements/LoadingSpinner";
+
+// App.js contains routes and navigation
+const App = () => {
+    const routes = (
+        <Routes>
+            {/* to only show page` when URL is exact, else it will show any page that starts with / */}
+            <Route path="/" element={<Search />} />
+            {/* if path not found, redirect to path / */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+    );
+
+    return (
+        <Router>
+            <MainNavigation />
+            {/* Routes prevents cascade when path matches route, useful for pages */}
+            <main>
+                <Suspense
+                    fallback={
+                        <div className="center">
+                            <LoadingSpinner />
+                        </div>
+                    }
+                >
+                    {routes}
+                </Suspense>
+            </main>
+        </Router>
+    );
+};
 
 export default App;
