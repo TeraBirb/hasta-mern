@@ -9,6 +9,7 @@ import {
 import MainNavigation from "./Navigation/MainNavigation";
 import Search from "./Search/Search";
 import LoadingSpinner from "./UIElements/LoadingSpinner";
+import ResultsList from "./Search/ResultsList";
 
 // App.js contains routes and navigation
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
             {/* to only show page` when URL is exact, else it will show any page that starts with / */}
             <Route path="/" element={<Search />} />
+            <Route path="/results" element={<ResultsList />} />
             {/* if path not found, redirect to path / */}
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
