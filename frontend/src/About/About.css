@@ -1,0 +1,12 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    margin: 0.5rem 5rem;
+}
+
+.about h2,
+.about p {
+    text-align: center;
+}

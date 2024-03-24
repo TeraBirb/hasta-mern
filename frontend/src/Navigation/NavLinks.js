@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import "./NavLinks.css";
 
 const NavLinks = (props) => {
+    const isAuthenticated = true; // Replace with your authentication logic
+
     return (
         <ul className="nav-links">
             <li>
@@ -11,17 +13,26 @@ const NavLinks = (props) => {
                 </NavLink>
             </li>
             <li>
-                <NavLink to="">FAVORITES</NavLink>
+                <NavLink to="/favorites">FAVORITES</NavLink>
             </li>
             <li>
-                <NavLink to="">ABOUT</NavLink>
+                <NavLink to="/about">ABOUT</NavLink>
             </li>
             {/* To add conditional based on authentication */}
+            {/* {isAuthenticated ? (
+                <li>
+                    <NavLink to="/authenticate">LOGIN</NavLink>
+                </li>
+            ) : (
+                <li>
+                    <button>LOGIN</button>
+                </li>
+            )} */}
             <li>
-                <button>LOGIN</button>
+                <NavLink to="/authenticate">LOGIN</NavLink>
             </li>
             <li>
-                <button>LOGOUT</button>
+                <NavLink to="/authenticate">LOGOUT</NavLink>
             </li>
         </ul>
     );

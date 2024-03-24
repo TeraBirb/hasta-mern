@@ -10,6 +10,8 @@ import MainNavigation from "./Navigation/MainNavigation";
 import Search from "./Search/Search";
 import LoadingSpinner from "./UIElements/LoadingSpinner";
 import ResultsList from "./Search/ResultsList";
+import About from "./About/About";
+import Authenticate from "./Authenticate/Authenticate";
 
 // App.js contains routes and navigation
 const App = () => {
@@ -18,6 +20,9 @@ const App = () => {
             {/* to only show page` when URL is exact, else it will show any page that starts with / */}
             <Route path="/" element={<Search />} />
             <Route path="/results" element={<ResultsList />} />
+            <Route path="/favorites" element={<ResultsList />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/authenticate" element={<Authenticate />} />
             {/* if path not found, redirect to path / */}
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
