@@ -1,9 +1,12 @@
 import "./Search.css";
 
 // handleSearch function that redirects to a ResultsList component
-const handleSearch = () => {
+const handleSearch = (props) => {
     console.log("Searching...");
-    // Redirect to ResultsList component
+    // directs to /results
+    // props.history.push("/results");
+    window.location.href = "/results";
+    
     
 };
 

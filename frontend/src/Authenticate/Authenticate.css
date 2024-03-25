@@ -1,0 +1,46 @@
+.authenticate {
+    color: white;
+    background-color: gray;
+    text-align: center;
+    width: 60vw;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 10px;
+
+}
+
+.authenticate form {
+    /* Add a line break after each element */
+    display: block;
+    align-items: center;
+
+}
+
+.authenticate form input {
+    display: block;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    text-align: center;
+    width: 100%;
+    font-size: 1.2rem;
+} 
+
+.authenticate form button {
+    display: block;
+    margin: 0.5rem auto;
+    padding: 0.5rem;
+    width: 40%;
+    font-size: 1.2rem;
+    background-color: white;
+    color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.passwordRequirements p {
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 auto;
+    padding: 0;
+}
