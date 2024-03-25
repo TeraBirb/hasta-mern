@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import "./Listing.css";
+import NavigateBack from "../UIElements/NavigateBack";
 
 const DUMMY_DESCRIPTION = `Hello world, this is where the listing description will go.
 I will add links to where the thingy was pulled from.
@@ -60,7 +61,9 @@ const Listing = () => {
     // somehow pass props to this component
     console.log(listing);
     return (
+        <React.Fragment>
         <div className="listing">
+        <NavigateBack />
             <div className="listingImageWrapper">
                 <img
                     className="listingImage"
@@ -87,6 +90,7 @@ const Listing = () => {
                 <button onClick={handleApply}>Apply on the Listing Site</button>
             </div>
         </div>
+        </React.Fragment>
     );
 };
 

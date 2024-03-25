@@ -3,3 +3,38 @@
     margin: 0 auto;
     width: 80vw;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pagination li {
+    background-color: green;
+    border-radius: 50%; /* Make it a circle */
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+
+    &:not(.active):hover {
+        transform: scale(1.1);
+    }
+
+    &:not(.active):active {
+        transform: scale(0.9);
+    }
+
+    &.active {
+        background-color: gray;
+        cursor: default;
+        pointer-events: none;
+    }
+}
+

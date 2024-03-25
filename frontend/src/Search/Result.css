@@ -19,53 +19,22 @@
     /* width: 360px; */
     width: 20vw;
     transition: box-shadow 0.3s, width 0.3s;
-}
 
-.resultBox:hover {
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 20.5vw;
-}
+    &:hover {
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: 20.5vw;
+    }
 
+    img {
+        width: 100%;
+        height: auto;
+        max-height: 640px;
+        border-radius: 5px;
+    }
 
-.resultBox img {
-    width: 100%;
-    height: auto;
-    max-height: 640px;
-    border-radius: 5px;
-}
-
-.resultBox p {
-    margin: 0;
-    padding: 0;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-    padding: 0;
-    list-style: none;
-}
-
-.pagination li {
-    background-color: green;
-    border-radius: 50%; /* Make it a circle */
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-    margin: 5px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.pagination li:not(.active):hover {
-    background-color: darkgreen;
-}
-
-li.active {
-    background-color: gray;
-    cursor: default;
-    pointer-events: none;
+    p {
+        margin: 0;
+        padding: 0;
+    }
 }
