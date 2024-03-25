@@ -1,15 +1,17 @@
+import "./Result.css";
+
 const Result = props => {
     return (
         <div className="results">
-            <div className="result__box">
+            <div className="resultBox">
                 <img src="" alt="" />
-                <div className="result__info">
+                <div className="resultInfo">
+                    <img src={props.image} alt={`Listing image of ${props.title}`} />
                     <h3>{props.title}</h3>
                     <p>{props.price}</p>
                     <p>{props.address}</p>
-                    <p>{props.bedrooms}</p>
-                    <p>{props.bathrooms}</p>
-                    <p>{props.sqFt}</p>
+                    <p>{props.bedrooms} bed, {props.bathrooms} bath</p>
+                    <p>{props.sqFt} square feet</p>
                 </div>
             </div>
         </div>

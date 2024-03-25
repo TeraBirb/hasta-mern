@@ -48,3 +48,20 @@ const App = () => {
 };
 
 export default App;
+
+// Frontend
+    // Create a search page :)
+    // Login page :)
+    // Search results page
+    // Individual result page
+// Setup mongodb database
+// Backend
+    // Create API
+    // Create routes
+    // Create controllers for CRUD
+    // Create models
+    // Create middleware
+    // Create error handling
+    // Create authentication
+    // Create authorization
+// Integrate
