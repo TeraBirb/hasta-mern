@@ -11,15 +11,42 @@
 }
 
 .listingImageWrapper {
+    flex: 70%;
     background-color: aquamarine;
     /* Column Style */
     /* margin: 10px auto; */
     /* text-align: center; */
+    /* position: relative; */
+}
+
+.listingImage {
+    /* Column Style */
+    /* margin: 10px auto; */
+    /* max-height: 60vh; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    object-fit: cover;
+    max-width: 100%;
+}
+
+.listingDetails {
+    flex: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
     position: relative;
+    /* Column Style */
+    /* justify-content: space-between; */
+    /* width: 70%; */
+    /* margin: 10px auto; */
+    h3,
+    h4 {
+        margin: 0;
+    }
 }
 
 .favorite {
-    width: 4rem;
+    max-width: 4rem;
     position: absolute;
     right: 1rem;
     top: 1rem;
@@ -34,29 +61,66 @@
     transform: scale(1);
 }
 
-.listingImage {
-    /* Column Style */
-    /* margin: 10px auto; */
-    /* max-height: 60vh; */
-    object-fit: cover;
-}
-
-.listingDetails {
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-    /* Column Style */
-    /* justify-content: space-between; */
-    /* width: 70%; */
-    /* margin: 10px auto; */
+.listingDetails hr {
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid #000000;
 }
 
 .listingDetails p {
     margin: 0;
 }
 
-.listingDetails hr {
-    margin: 10px 0;
-    border: 0;
-    border-top: 1px solid #000000;
+.listingDetails button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: thin black solid;
+    border-radius: 5px;
+    background-color: #f1356d;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.listingDetails button:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.listingDetails button:active {
+    transform: scale(0.99);
+}
+
+@media (max-width: 768px) {
+    .listing {
+        flex-direction: column;
+        width: 75vw;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    .listingImageWrapper {
+        /* Column Style */
+        margin: 10px auto;
+        text-align: center;
+        position: relative;
+    }
+
+    .listingImage {
+        /* Column Style */
+        margin: 10px auto;
+    }
+
+    .favorite {
+        max-width: 3rem;
+        position: absolute;
+        right: 0;
+        top: 1rem;
+    }
+    
+    .listingDetails {
+        /* Column Style */
+        justify-content: space-between; 
+        width: 70%;
+        margin: 10px auto;
+    }
 }

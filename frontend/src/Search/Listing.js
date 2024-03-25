@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import "./Listing.css";
@@ -40,31 +41,50 @@ this amazing area! Owner will pay for gardener. Tenant is
 responsible for all other desired & required utilities
 including water, garbage, PGE, Phone, Internet, Etc.`;
 
-// const HEART_ICON = 
+const HEART_ICON_FALSE = "https://www.svgrepo.com/show/404845/black-heart.svg";
+const HEART_ICON_TRUE = "https://www.svgrepo.com/show/407319/red-heart.svg";
 
 const Listing = () => {
     const location = useLocation();
     const listing = location.state;
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const handleFavorite = () => {
+        setIsFavorite(!isFavorite);
+    };
+
+    const handleApply = () => {
+        console.log("Leaving website...");
+    }
 
     // somehow pass props to this component
     console.log(listing);
     return (
         <div className="listing">
             <div className="listingImageWrapper">
-                <img className="favorite" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png" alt={listing.title} />
-                <img className="listingImage" src={listing.image} alt={listing.title} />
+                <img
+                    className="listingImage"
+                    src={listing.image}
+                    alt={listing.title}
+                />
             </div>
             <div className="listingDetails">
+                <img
+                    className="favorite"
+                    src={isFavorite ? HEART_ICON_TRUE : HEART_ICON_FALSE}
+                    alt={listing.title}
+                    onClick={handleFavorite}
+                />
                 <h2>{listing.title}</h2>
-                <p>{listing.price}</p>
-                <p>{listing.address}</p>
-                <p>
+                <h3>{listing.price}</h3>
+                <h4>{listing.address}</h4>
+                <h4>
                     {listing.bedrooms} bed, {listing.bathrooms} bath
-                </p>
-                <p>{listing.sqFt} square feet</p>
+                </h4>
+                <h4>{listing.sqFt} square feet</h4>
                 <hr />
                 <p>{DUMMY_DESCRIPTION}</p>
-                <button>Apply on the Listing Site</button>
+                <button onClick={handleApply}>Apply on the Listing Site</button>
             </div>
         </div>
     );
