@@ -31,6 +31,7 @@
 .resultBox img {
     width: 100%;
     height: auto;
+    max-height: 640px;
     border-radius: 5px;
 }
 
@@ -66,4 +67,5 @@
 li.active {
     background-color: gray;
     cursor: default;
+    pointer-events: none;
 }

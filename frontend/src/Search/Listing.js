@@ -1,0 +1,73 @@
+import { useLocation } from "react-router-dom";
+
+import "./Listing.css";
+
+const DUMMY_DESCRIPTION = `Hello world, this is where the listing description will go.
+I will add links to where the thingy was pulled from.
+Discover suburban bliss at 350 AMBAR Way. This luxurious
+3-bedroom, 2.5-bathroom 2,590 Sq. Ft Single Family Home is
+nestled on a sprawling 10,735 Sq. Ft lot with an exquisite
+backyard, & ideally situated on a serene, quiet, wide
+tree-lined street in the heart of Central Menlo Park. The
+home offers a seamless layout designed for both relaxation
+and entertainment. The 3 bedrooms provide ample space for
+privacy and comfort, while the open living areas invite the
+flow of natural light and a sense of togetherness.Everything
+filters out through to the beautiful backyard patio which
+can be accessed through multiple french doors. Home boasts a
+large kitchen with an island & pantry. The 3rd bedroom has
+custom built-in cabinets ideal for working from home. Enjoy
+your master bedroom suite with a nice size bathroom &
+closets. Utilize the attached large 2 car garage which has
+plenty of additional storage. Tucked away on a peaceful
+street of many exceptionally maintained homes on large lots,
+you'll find yourself surrounded by a harmonious blend of the
+best of Silicon Valley living. Make the most of the
+highly-regarded Menlo Park school district. In this esteemed
+neighborhood, you'll find yourself part of a community that
+values quality education and excellence. Indulge in the
+convenience of being within walking distance to parks and
+shopping. Biking to Stanford University, Palo Alto or Sand
+Hill Rd. is also right at your doorstep. Envision creating
+your very own sanctuary where memories are made, whether
+it's entertaining guests or simply unwinding beneath the
+open sky in your gorgeous private manicured backyard.
+Explore the remarkable lifestyle, renowned schools, sense of
+community, and convenience that embodies the essence of
+Central Menlo Park Living. Contact us today to embark on
+this exciting journey towards experiencing the allure of
+this amazing area! Owner will pay for gardener. Tenant is
+responsible for all other desired & required utilities
+including water, garbage, PGE, Phone, Internet, Etc.`;
+
+// const HEART_ICON = 
+
+const Listing = () => {
+    const location = useLocation();
+    const listing = location.state;
+
+    // somehow pass props to this component
+    console.log(listing);
+    return (
+        <div className="listing">
+            <div className="listingImageWrapper">
+                <img className="favorite" src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png" alt={listing.title} />
+                <img className="listingImage" src={listing.image} alt={listing.title} />
+            </div>
+            <div className="listingDetails">
+                <h2>{listing.title}</h2>
+                <p>{listing.price}</p>
+                <p>{listing.address}</p>
+                <p>
+                    {listing.bedrooms} bed, {listing.bathrooms} bath
+                </p>
+                <p>{listing.sqFt} square feet</p>
+                <hr />
+                <p>{DUMMY_DESCRIPTION}</p>
+                <button>Apply on the Listing Site</button>
+            </div>
+        </div>
+    );
+};
+
+export default Listing;

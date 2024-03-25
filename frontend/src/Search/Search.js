@@ -1,16 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 import "./Search.css";
 
 // handleSearch function that redirects to a ResultsList component
-const handleSearch = (props) => {
-    console.log("Searching...");
-    // directs to /results
-    // props.history.push("/results");
-    window.location.href = "/results";
-    
-    
-};
-
 const Search = () => {
+    const navigate = useNavigate();
+
+    const handleSearch = () => {
+        console.log("Searching...");
+        // directs to /results
+        navigate("/results");
+    };
+    
+
     return (
         <div className="search">
             <h2>Discover the perfect place to call home</h2>
