@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-import Listing from "./Listing";
-
 import "./Result.css";
 
 const Result = (props) => {
@@ -11,6 +9,7 @@ const Result = (props) => {
         console.log("Clicked!");
         // after we set up backend, we will navigate to specific listing
         navigate("/listing/" + props.id, { state: props });
+        window.scrollTo(0, 0);
         // navigate("/listing");
     };
 

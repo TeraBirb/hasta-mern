@@ -4,7 +4,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 25vw;
+    width: 80vw;
     margin: 0 auto;
     padding: 0;
     list-style: none;
@@ -12,18 +12,17 @@
 
 .resultBox {
     background-color: thistle;
-    margin: 10px auto; /* Add equal space between sibling elements */
+    margin: 10px auto;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    /* width: 360px; */
-    width: 20vw;
-    transition: box-shadow 0.3s, width 0.3s;
+    width: 100%;
+    transition: box-shadow 0.3s, width 0.3s, transform 0.3s;
 
     &:hover {
         cursor: pointer;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        width: 20.5vw;
+        transform: scale(1.05);
     }
 
     img {
@@ -36,5 +35,14 @@
     p {
         margin: 0;
         padding: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .results {
+        width: 25vw;
+    }
+    .resultBox {
+        width: 20vw;
     }
 }

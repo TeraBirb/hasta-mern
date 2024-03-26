@@ -57,7 +57,7 @@ export default App;
     // Login page :)
     // Search results page :)
     // Refactor search button to redirect to resultslist :)
-    // Individual result page 
+    // Individual result page :)
 // Setup mongodb database
 // Backend
     // Create API
