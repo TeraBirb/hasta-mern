@@ -1,5 +1,5 @@
 const express = require("express");
-const { check } = require("express-validator");
+const checkAuth = require("../middleware/check-auth");
 
 const listingController = require("../controllers/listing-controller");
 // const checkAuth = require("../middleware/check-auth");
@@ -14,19 +14,18 @@ router.get("/:lid", listingController.getListingById);
 // for search results, third-party API calls
 router.get("/search/:query", listingController.getListingsBySearch);
 
+// Dev only tool, to save listings to database
+router.post("/", listingController.devAddFake);
+
 // User needs to be authenticated to access the routes below
-router.use(checkAuth);
+// router.use(checkAuth);
 
 // to access keys other than id (already taken up by first one),
-// add another "directory" or segment: e.g. /users/
 // for Favorites page
 router.get("/user/:uid", listingController.getListingsByUserId);
 
-// all requests except GET requires a token
-// router.use(checkAuth);
-
 router.post(
-    "/",
+    "/save",
     listingController.saveListing
 );
 
