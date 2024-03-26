@@ -27,9 +27,11 @@ const getListingsBySearch = async (req, res, next) => {
 
     let listings;
     try {
-        listings = await Listing.find({
-            address: { $regex: query, $options: "i" },
-        });
+        // listings = await Listing.find({
+        //     address: { $regex: query, $options: "i" },
+        // });
+        // returning all listings for now
+        listings = await Listing.find();
     } catch (err) {
         console.log(err);
         return next(new Error("Could not find listings."));

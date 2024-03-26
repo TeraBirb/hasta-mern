@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import "./Search.css";
 
@@ -6,17 +7,30 @@ import "./Search.css";
 const Search = () => {
     const navigate = useNavigate();
 
-    const handleSearch = () => {
+    const handleSearch = async () => {
         console.log("Searching...");
         // directs to /results
-        navigate("/results");
+        try {
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URL + "/listing/search/TEST");
+            // extract data
+            const data = response.data;
+
+            if (response.status !== 200) {
+                throw new Error(data);
+            }
+            console.log(data);
+            // attach data as state to navigate
+            navigate("/results", { state: { data: data } });
+            window.scrollTo(0, 0);
+        } catch (err) {
+            console.log(err);
+        }
     };
-    
 
     return (
         <div className="search">
-            <h2>Discover the perfect place to call home</h2>
-            <p>Browse homes and apartments for rent</p>
+            {/* <h2>Discover the perfect place to call home</h2> */}
+            <h3>Browse homes and apartments for rent</h3>
             <div className="search__main">
                 <input
                     type="text"

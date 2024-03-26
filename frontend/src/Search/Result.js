@@ -10,7 +10,6 @@ const Result = (props) => {
         // after we set up backend, we will navigate to specific listing
         navigate("/listing/" + props.id, { state: props });
         window.scrollTo(0, 0);
-        // navigate("/listing");
     };
 
     return (
@@ -19,16 +18,13 @@ const Result = (props) => {
                 <img src="" alt="" />
                 <div className="resultInfo">
                     <img
-                        src={props.image}
-                        alt={`Listing image of ${props.title}`}
+                        src={props.photos[0]}
+                        alt="Listing"
                     />
                     <h3>{props.title}</h3>
-                    <p>{props.price}</p>
+                    <p>{`\$${props.price}`}</p>
                     <p>{props.address}</p>
-                    <p>
-                        {props.bedrooms} bed, {props.bathrooms} bath
-                    </p>
-                    <p>{props.sqFt} square feet</p>
+                    <p>{props.sqft} square feet</p>
                 </div>
             </div>
         </div>

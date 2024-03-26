@@ -3,8 +3,9 @@ import { useState } from "react";
 import Result from "./Result";
 
 import "./ResultsList.css";
+import { useLocation } from "react-router-dom";
 
-const ResultsList = (props) => {
+const ResultsList = () => {
     // if (props.items.length === 0) {
     // if (!props.items) {
     //   return (
@@ -14,107 +15,113 @@ const ResultsList = (props) => {
     //   );
     // }
 
-    const DUMMY_DATA = [
-        {
-            key: "1",
-            id: "1",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 1",
-            price: "$1000",
-            address: "1234 Elm St",
-            bedrooms: 3,
-            bathrooms: 2,
-            sqFt: 1200,
-        },
-        {
-            key: "2",
-            id: "2",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 2",
-            price: "$2000",
-            address: "5678 Elm St",
-            bedrooms: 4,
-            bathrooms: 3,
-            sqFt: 1500,
-        },
-        {
-            key: "3",
-            id: "3",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 3",
-            price: "$3000",
-            address: "91011 Elm St",
-            bedrooms: 5,
-            bathrooms: 4,
-            sqFt: 1800,
-        },
-        {
-            key: "4",
-            id: "4",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 4",
-            price: "$4000",
-            address: "121314 Elm St",
-            bedrooms: 6,
-            bathrooms: 5,
-            sqFt: 2100,
-        },
-        {
-            key: "5",
-            id: "5",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 5",
-            price: "$5000",
-            address: "151617 Elm St",
-            bedrooms: 7,
-            bathrooms: 6,
-            sqFt: 2400,
-        },
-        {
-            key: "6",
-            id: "6",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 6",
-            price: "$6000",
-            address: "181920 Elm St",
-            bedrooms: 8,
-            bathrooms: 7,
-            sqFt: 2700,
-        },
-        {
-            key: "7",
-            id: "7",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 7",
-            price: "$4000",
-            address: "121314 Elm St",
-            bedrooms: 6,
-            bathrooms: 5,
-            sqFt: 2100,
-        },
-        {
-            key: "8",
-            id: "8",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 8",
-            price: "$5000",
-            address: "151617 Elm St",
-            bedrooms: 7,
-            bathrooms: 6,
-            sqFt: 2400,
-        },
-        {
-            key: "9",
-            id: "9",
-            image: "https://fakeimg.pl/960x640",
-            title: "Title 9",
-            price: "$6000",
-            address: "181920 Elm St",
-            bedrooms: 8,
-            bathrooms: 7,
-            sqFt: 2700,
-        },
-    ];
+    // const DUMMY_DATA = [
+    //     {
+    //         key: "1",
+    //         id: "1",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 1",
+    //         price: "$1000",
+    //         address: "1234 Elm St",
+    //         bedrooms: 3,
+    //         bathrooms: 2,
+    //         sqFt: 1200,
+    //     },
+    //     {
+    //         key: "2",
+    //         id: "2",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 2",
+    //         price: "$2000",
+    //         address: "5678 Elm St",
+    //         bedrooms: 4,
+    //         bathrooms: 3,
+    //         sqFt: 1500,
+    //     },
+    //     {
+    //         key: "3",
+    //         id: "3",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 3",
+    //         price: "$3000",
+    //         address: "91011 Elm St",
+    //         bedrooms: 5,
+    //         bathrooms: 4,
+    //         sqFt: 1800,
+    //     },
+    //     {
+    //         key: "4",
+    //         id: "4",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 4",
+    //         price: "$4000",
+    //         address: "121314 Elm St",
+    //         bedrooms: 6,
+    //         bathrooms: 5,
+    //         sqFt: 2100,
+    //     },
+    //     {
+    //         key: "5",
+    //         id: "5",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 5",
+    //         price: "$5000",
+    //         address: "151617 Elm St",
+    //         bedrooms: 7,
+    //         bathrooms: 6,
+    //         sqFt: 2400,
+    //     },
+    //     {
+    //         key: "6",
+    //         id: "6",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 6",
+    //         price: "$6000",
+    //         address: "181920 Elm St",
+    //         bedrooms: 8,
+    //         bathrooms: 7,
+    //         sqFt: 2700,
+    //     },
+    //     {
+    //         key: "7",
+    //         id: "7",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 7",
+    //         price: "$4000",
+    //         address: "121314 Elm St",
+    //         bedrooms: 6,
+    //         bathrooms: 5,
+    //         sqFt: 2100,
+    //     },
+    //     {
+    //         key: "8",
+    //         id: "8",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 8",
+    //         price: "$5000",
+    //         address: "151617 Elm St",
+    //         bedrooms: 7,
+    //         bathrooms: 6,
+    //         sqFt: 2400,
+    //     },
+    //     {
+    //         key: "9",
+    //         id: "9",
+    //         image: "https://fakeimg.pl/960x640",
+    //         title: "Title 9",
+    //         price: "$6000",
+    //         address: "181920 Elm St",
+    //         bedrooms: 8,
+    //         bathrooms: 7,
+    //         sqFt: 2700,
+    //     },
+    // ];
+    
+    let DUMMY_DATA = [];
+    const location = useLocation();
+    const data = location.state;
+
+    DUMMY_DATA = data.data;
 
     // Pagination logic
     const itemsPerPage = 6;
@@ -143,13 +150,14 @@ const ResultsList = (props) => {
                         <Result
                             key={result.id}
                             id={result.id}
-                            image={result.image}
-                            title={result.title}
+                            type={result.type}
+                            photos={result.photos}
+                            title={`${result.beds} Bed, ${result.baths} Bath ${result.type}`}
                             price={result.price}
                             address={result.address}
-                            bedrooms={result.bedrooms}
-                            bathrooms={result.bathrooms}
-                            sqFt={result.sqFt}
+                            beds={result.beds}
+                            baths={result.baths}
+                            sqft={result.sqft}
                         />
                     );
                 })}

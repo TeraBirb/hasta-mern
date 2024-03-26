@@ -45,13 +45,14 @@ including water, garbage, PGE, Phone, Internet, Etc.`;
 
 const HEART_ICON_FALSE = "https://www.svgrepo.com/show/404845/black-heart.svg";
 const HEART_ICON_TRUE = "https://www.svgrepo.com/show/407319/red-heart.svg";
+const NO_INFO = "N/A";
 
 const Listing = () => {
     const location = useLocation();
     const listing = location.state;
     const [isFavorite, setIsFavorite] = useState(false);
 
-    const handleFavorite = () => {
+    const handleFavorite = event => {
         setIsFavorite(!isFavorite);
     };
 
@@ -59,17 +60,21 @@ const Listing = () => {
         console.log("Leaving website...");
     }
 
-    console.log(listing);
     return (
         <React.Fragment>
         <div className="listing">
         <NavigateBack />
             <div className="listingImageWrapper">
-                <img
-                    className="listingImage"
-                    src={listing.image}
-                    alt={listing.title}
-                />
+                {listing.photos.map((photo, index) => {
+                    return (
+                        <img
+                            key={index}
+                            className="listingImage"
+                            src={photo}
+                            alt="Listing"
+                        />
+                    );
+                })}
             </div>
             <div className="listingDetails">
                 <img
@@ -79,12 +84,12 @@ const Listing = () => {
                     onClick={handleFavorite}
                 />
                 <h2>{listing.title}</h2>
-                <h3>{listing.price}</h3>
-                <h4>{listing.address}</h4>
+                <h3>{`\$${listing.price || NO_INFO}`}</h3>
+                <h4>{listing.address || NO_INFO}</h4>
                 <h4>
-                    {listing.bedrooms} bed, {listing.bathrooms} bath
+                    {`${listing.beds || NO_INFO} bedrooms, ${listing.baths || NO_INFO} bathrooms`}
                 </h4>
-                <h4>{listing.sqFt} square feet</h4>
+                <h4>{listing.sqft || NO_INFO} square feet</h4>
                 <div className="mapContainer">
                     {/* <Map center={listing.coordinates} zoom={16} /> */}
                     <Map center={{lat: -34.397, lng: 150.644}} zoom={16} />
