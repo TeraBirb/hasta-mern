@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import "./Listing.css";
 import NavigateBack from "../UIElements/NavigateBack";
+import Map from "../UIElements/Map";
 
 const DUMMY_DESCRIPTION = `Hello world, this is where the listing description will go.
 I will add links to where the thingy was pulled from.
@@ -58,7 +59,6 @@ const Listing = () => {
         console.log("Leaving website...");
     }
 
-    // somehow pass props to this component
     console.log(listing);
     return (
         <React.Fragment>
@@ -85,6 +85,10 @@ const Listing = () => {
                     {listing.bedrooms} bed, {listing.bathrooms} bath
                 </h4>
                 <h4>{listing.sqFt} square feet</h4>
+                <div className="mapContainer">
+                    {/* <Map center={listing.coordinates} zoom={16} /> */}
+                    <Map center={{lat: -34.397, lng: 150.644}} zoom={16} />
+                </div>
                 <hr />
                 <p>{DUMMY_DESCRIPTION}</p>
                 <button onClick={handleApply}>Apply on the Listing Site</button>

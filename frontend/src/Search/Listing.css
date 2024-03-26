@@ -90,6 +90,12 @@
     transform: scale(0.99);
 }
 
+.mapContainer {
+    margin-top: 10px;
+    height: 15rem;
+    width: 100%;
+}
+
 @media (max-width: 768px) {
     .listing {
         flex-direction: column;
@@ -116,10 +122,10 @@
         right: 0;
         top: 1rem;
     }
-    
+
     .listingDetails {
         /* Column Style */
-        justify-content: space-between; 
+        justify-content: space-between;
         width: 70%;
         margin: 10px auto;
     }

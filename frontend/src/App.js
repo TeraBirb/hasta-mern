@@ -58,6 +58,7 @@ export default App;
     // Search results page :)
     // Refactor search button to redirect to resultslist :)
     // Individual result page :)
+    // Add map to individual result page :)
 // Setup mongodb database
 // Backend
     // Create API
