@@ -99,7 +99,7 @@
 @media (max-width: 768px) {
     .listing {
         flex-direction: column;
-        width: 75vw;
+        width: 90vw;
         margin: 10px auto;
         padding: 10px;
     }
@@ -126,7 +126,7 @@
     .listingDetails {
         /* Column Style */
         justify-content: space-between;
-        width: 70%;
+        width: 100%;
         margin: 10px auto;
     }
 }
