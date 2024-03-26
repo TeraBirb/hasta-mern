@@ -68,3 +68,55 @@ const signup = async (req, res, next) => {
         token: token,
     });
 };
+
+// POST Request "api/users/login"
+const login = async (req, res, next) => {
+    const { username, password } = req.body;
+
+    let identifiedUser;
+    try {
+        identifiedUser = await User.findOne({ username: username });
+    } catch (err) {
+        console.log(err);
+        return next(new Error("Something went wrong logging in"));
+    }
+
+    if (!identifiedUser) {
+        return next(new Error("Could not find user."));
+    }
+
+    // check if password is correct
+    let isValidPassword = false;
+    try {
+        isValidPassword = await bcrypt.compare(
+            password,
+            identifiedUser.password
+        );
+        console.log(isValidPassword);
+    } catch (err) {
+        return next(
+            new Error("Something went wrong during password comparison.")
+        );
+    }
+
+    if (!isValidPassword) {
+        return next(new Error("Incorrect password."));
+    }
+
+    let token;
+
+    try {
+        token = jwt.sign(
+            { userId: identifiedUser.id, username: identifiedUser.username },
+            process.env.JWT_KEY,
+            { expiresIn: "1h" }
+        );
+    } catch (err) {
+        return next(new Error("Something went wrong signing token during login."));
+    }
+
+    res.json({ userId: identifiedUser.id, username: identifiedUser.username, token });
+};
+
+exports.signup = signup;
+exports.login = login;
