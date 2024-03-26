@@ -1,7 +1,7 @@
 const express = require("express");
 const { check } = require("express-validator");
 
-const listingController = require("../controllers/places-controller");
+const listingController = require("../controllers/listing-controller");
 // const checkAuth = require("../middleware/check-auth");
 
 // dont express EXPRESS as a function. rather, use express.Router()
@@ -13,6 +13,9 @@ router.get("/:lid", listingController.getListingById);
 
 // for search results, third-party API calls
 router.get("/search/:query", listingController.getListingsBySearch);
+
+// User needs to be authenticated to access the routes below
+router.use(checkAuth);
 
 // to access keys other than id (already taken up by first one),
 // add another "directory" or segment: e.g. /users/

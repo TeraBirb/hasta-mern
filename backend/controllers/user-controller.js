@@ -1,9 +1,10 @@
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 
-// POST Request "api/users/signup"
+// POST Request "api/user/signup"
 const signup = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -14,10 +15,10 @@ const signup = async (req, res, next) => {
     // ideally transmitted via HTTPS
     const { username, password, confirmPassword } = req.body;
 
-    // throw error if email already exists
+    // throw error if username already exists
     let existingUser;
     try {
-        existingUser = await User.findOne({ email: email });
+        existingUser = await User.findOne({ username: username });
     } catch (err) {
         console.log(err);
         return next(new Error("Something went wrong during signup."));
@@ -88,15 +89,10 @@ const login = async (req, res, next) => {
     // check if password is correct
     let isValidPassword = false;
     try {
-        isValidPassword = await bcrypt.compare(
-            password,
-            identifiedUser.password
-        );
-        console.log(isValidPassword);
+        isValidPassword = await bcrypt.compare(password, identifiedUser.password);
     } catch (err) {
-        return next(
-            new Error("Something went wrong during password comparison.")
-        );
+        console.log(err);
+        return next(new Error("Password compare problem."));
     }
 
     if (!isValidPassword) {
@@ -112,11 +108,73 @@ const login = async (req, res, next) => {
             { expiresIn: "1h" }
         );
     } catch (err) {
-        return next(new Error("Something went wrong signing token during login."));
+        return next(
+            new Error("Something went wrong signing token during login.")
+        );
     }
 
-    res.json({ userId: identifiedUser.id, username: identifiedUser.username, token });
+    res.json({
+        userId: identifiedUser.id,
+        username: identifiedUser.username,
+        token,
+    });
+};
+
+// PATCH Request "api/users/change-credentials"
+const changeCredentials = async (req, res, next) => {
+    const { currentUsername, currentPassword, newUsername, newPassword } = req.body;
+
+    let identifiedUser;
+    try {
+        identifiedUser = await User.findOne({ username: currentUsername });
+    } catch (err) {
+        console.log(err);
+        return next(new Error("Username does not exist."));
+    }
+
+    // more validation
+    let isValidPassword = false;
+    try {
+        isValidPassword = await bcrypt.compare(currentPassword, identifiedUser.password);
+    } catch (err) {
+        console.log(err);
+        return next(new Error("Password compare problem."));
+    }
+
+    if (!isValidPassword) {
+        return next(new Error("Incorrect password."));
+    }
+
+    // check if user wants to change password, then hash before saving
+    if (newPassword) {
+        let hashedPassword;
+        try {
+            hashedPassword = await bcrypt.hash(newPassword, 12);
+        } catch (err) {
+            return next(new Error("Could not hash password.", 500));
+        }
+
+        identifiedUser.password = hashedPassword;
+    }
+
+    if (newUsername) {
+        identifiedUser.username = newUsername;
+    }
+
+    try {
+        await identifiedUser.save();
+    } catch (err) {
+        console.log(err);
+        return next(new Error("Could not save new credentials."));
+    }
+
+    // does not return a new token
+    res.json({
+        userId: identifiedUser.id,
+        username: identifiedUser.username,
+    });
 };
 
 exports.signup = signup;
 exports.login = login;
+exports.changeCredentials = changeCredentials;

@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 // my modules
-const listingRoutes = require("./routes/listing-routes.js");
+// const listingRoutes = require("./routes/listing-routes.js");
 const userRoutes = require("./routes/user-routes");
 
 // script code
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 // import logic from routes,
 // will only route if the path starts with /api/user or /api/listing
-app.use("/api/listing", listingRoutes);
+// app.use("/api/listing", listingRoutes);
 app.use("/api/user", userRoutes);
 
 // middleware handling all requests that dont match any routes
@@ -47,3 +47,14 @@ mongoose
     .catch((err) => {
         console.log(err);
     });
+
+
+// Backend
+    // Create API
+    // Create routes :)
+    // Create controllers for CRUD
+    // Create models
+    // Create middleware
+    // Create error handling
+    // Create authentication
+    // Create authorization
