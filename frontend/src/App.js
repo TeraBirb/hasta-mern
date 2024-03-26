@@ -61,12 +61,13 @@ export default App;
     // Add map to individual result page :)
 // Setup mongodb database :)
 // Backend
-    // Create API
-    // Create routes
-    // Create controllers for CRUD
-    // Create models
-    // Create middleware
-    // Create error handling
-    // Create authentication
-    // Create authorization
-// Integrate
+    // Create API :)
+    // Create routes :)
+    // Create controllers for CRUD :)
+    // Create models :)
+    // Create middleware :)
+    // Create error handling :)
+    // Create authentication :)
+    // Create authorization :)
+    // Set up US Real Estate Listings API
+// Integrate 

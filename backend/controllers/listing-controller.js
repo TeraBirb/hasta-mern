@@ -123,18 +123,19 @@ exports.deleteListingFromFavorites = deleteListingFromFavorites;
 
 // export dev tool
 exports.devAddFake = async (req, res, next) => {
+    const { address, type, price, beds, baths, sqft } = req.body;
     const createdListing = new Listing({
         photos: [
             "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?cs=srgb&dl=pexels-pixabay-259588.jpg&fm=jpg",
             "https://st.depositphotos.com/1658611/2932/i/450/depositphotos_29329143-stock-photo-street-of-residential-houses.jpg",
             "https://img.freepik.com/free-photo/house-isolated-field_1303-23773.jpg",
         ],
-        address: "534 Bros St, Sunnyvale, CA 94085",
-        type: "House",
-        price: 4000,
-        beds: 3,
-        baths: 2,
-        sqft: 2000,
+        address: address || "534 Bros St, Sunnyvale, CA 94085",
+        type: type || "House",
+        price: price || 4000,
+        beds: beds || 3,
+        baths: baths || 2,
+        sqft: sqft || 2000,
         contact: "https://www.zillow.com/apartments/sunnyvale-ca/ironworks/9VG7n7/",
     });
 

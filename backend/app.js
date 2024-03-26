@@ -50,11 +50,12 @@ mongoose
 
 
 // Backend
-    // Create API
+    // Create API :)
     // Create routes :)
-    // Create controllers for CRUD
+    // Create controllers for CRUD :)
     // Create models :)
     // Create middleware :)
-    // Create error handling
+    // Create error handling :)
     // Create authentication :)
-    // Create authorization
+    // Create authorization :)
+    // Finalize US Real Estate Listings API
