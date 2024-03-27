@@ -20,28 +20,21 @@ const getListingById = async (req, res, next) => {
     res.json(listing);
 };
 
-// GET Request "api/listing/search/:query"
+// POST Request "api/listing/search"
 // THE MEAT AND POTATOES!!
 const saveResultstoDB = async (req, res, next) => {
-    const { photos,  } = req.body;
+    const results = req.body;
 
-    let listings;
+    // insertMany the resuts into the database, woohooo
     try {
-        // listings = await Listing.find({
-        //     address: { $regex: query, $options: "i" },
-        // });
-        // returning all listings for now
-        listings = await Listing.find();
+        insertedResults = await Listing.insertMany(results);
     } catch (err) {
         console.log(err);
-        return next(new Error("Could not find listings."));
+        return next(new Error("Could not save listings."));
     }
 
-    if (!listings || listings.length === 0) {
-        return next(new Error("No listings found."));
-    }
-
-    res.json(listings);
+    console.log("Results saved to database.");
+    res.json(insertedResults);
 };
 
 // GET Request "api/listing/user/:uid"
@@ -126,7 +119,7 @@ const deleteListingFromFavorites = async (req, res, next) => {
 
 // export all methods
 exports.getListingById = getListingById;
-exports.getListingsBySearch = saveResultstoDB;
+exports.saveResultstoDB = saveResultstoDB;
 exports.getListingsByUserId = getListingsByUserId;
 exports.saveListing = saveListing;
 exports.deleteListingFromFavorites = deleteListingFromFavorites;
