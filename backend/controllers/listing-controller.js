@@ -64,29 +64,33 @@ const getListingsByUserId = async (req, res, next) => {
     res.json(userWithListings.listings);
 };
 
-// POST Request "api/listing"
+// PATCH Request "api/listing/save"
 // When user clicks on "Add to Favorites"
 const saveListing = async (req, res, next) => {
-    const { address, type, price, beds, baths, sqft, contact } = req.body;
+    const { userId, listingId } = req.body;
 
-    const createdListing = new Listing({
-        address,
-        type,
-        price,
-        beds,
-        baths,
-        sqft,
-        contact,
-    });
+    let identifiedUser, identifiedListing;
+    try {
+        identifiedListing = await Listing.findById(listingId);
+        identifiedUser = await User.findById(userId);
+    } catch (err) {
+        console.log(err);
+        return next(new Error("Error finding listing or user by ID."));
+    }
+
+    if (!identifiedListing || !identifiedUser) {
+        return next(new Error("Listing or User does not exist."));
+    }
 
     try {
-        await createdListing.save();
+        await identifiedUser.favorites.push(identifiedListing);
+        await identifiedUser.save();
     } catch (err) {
         console.log(err);
         return next(new Error("Could not save listing."));
     }
 
-    res.status(201).json({ listing: createdListing });
+    res.status(201).json({ identifiedUser, identifiedListing });
 };
 
 // DELETE Request "api/listing/:lid"

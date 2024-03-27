@@ -24,10 +24,7 @@ router.post("/", listingController.devAddFake);
 // for Favorites page
 router.get("/user/:uid", listingController.getListingsByUserId);
 
-router.post(
-    "/save",
-    listingController.saveListing
-);
+router.patch("/save", listingController.saveListing);
 
 router.delete("/:lid", listingController.deleteListingFromFavorites);
 

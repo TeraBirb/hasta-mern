@@ -72,5 +72,5 @@ export default App;
     // Set up US Real Estate Listings API
 // Integrate 
     // Mock integrate :)
-    // disable reload on listing when Heart is clicked
     // Add favorite functionality to listing page
+    // Add authorization on backend and frontend
