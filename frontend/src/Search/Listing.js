@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import "./Listing.css";
@@ -52,8 +52,8 @@ const Listing = () => {
     const listing = location.state;
     const [isFavorite, setIsFavorite] = useState(false);
 
-    const handleFavorite = event => {
-        setIsFavorite(!isFavorite);
+    const handleFavorite = () => {
+        setIsFavorite(prevIsFavorite => !prevIsFavorite);
     };
 
     const handleApply = () => {

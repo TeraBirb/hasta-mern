@@ -5,7 +5,6 @@ import "./Map.css"
 const Map = (props) => {
   const mapRef = useRef();
 
-  // destructuring so we can use only parts of props as dependecies in useEffect
   const { center, zoom } = props;
 
   useEffect(() => {
