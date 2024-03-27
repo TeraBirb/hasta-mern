@@ -116,12 +116,12 @@ const ResultsList = () => {
     //         sqFt: 2700,
     //     },
     // ];
-    
+
     let DUMMY_DATA = [];
     const location = useLocation();
-    const data = location.state;
+    const data = location.state.data;
 
-    DUMMY_DATA = data.data;
+    DUMMY_DATA = data;
 
     // Pagination logic
     const itemsPerPage = 6;
@@ -138,7 +138,6 @@ const ResultsList = () => {
         (_, index) => index + 1
     );
 
-
     return (
         <div className="resultsListWrapper">
             <ul className="resultsList">
@@ -150,14 +149,11 @@ const ResultsList = () => {
                         <Result
                             key={result.id}
                             id={result.id}
-                            type={result.type}
+                            type={result.description.type}
+                            description={result.description}
                             photos={result.photos}
-                            title={`${result.beds} Bed, ${result.baths} Bath ${result.type}`}
                             price={result.price}
-                            address={result.address}
-                            beds={result.beds}
-                            baths={result.baths}
-                            sqft={result.sqft}
+                            location={result.location}
                         />
                     );
                 })}

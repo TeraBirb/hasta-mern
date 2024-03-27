@@ -92,7 +92,10 @@ export default App;
 // Mock integrate :)
 // Add favorite functionality to listing page
 // Backend :)
-// Integrate :)
-// Add authorization on backend and frontend :)
-// Backend
-// Frontend
+// Integrate
+    // Mock data to call backend api
+    // Use actual 3rd party api and push data to backend
+    // create a cleaner method to delete db data eventually?? maybe
+// Add authorization on backend and frontend 
+    // Backend
+    // Frontend
