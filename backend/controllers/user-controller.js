@@ -122,7 +122,7 @@ const login = async (req, res, next) => {
 
 // PATCH Request "api/users/change-credentials"
 const changeCredentials = async (req, res, next) => {
-    const { currentUsername, currentPassword, newUsername, newPassword } = req.body;
+    const { currentUsername, currentPassword, newUsername, newPassword, confirmPassword } = req.body;
 
     let identifiedUser;
     try {
@@ -132,7 +132,6 @@ const changeCredentials = async (req, res, next) => {
         return next(new Error("Username does not exist."));
     }
 
-    // more validation
     let isValidPassword = false;
     try {
         isValidPassword = await bcrypt.compare(currentPassword, identifiedUser.password);
@@ -145,8 +144,22 @@ const changeCredentials = async (req, res, next) => {
         return next(new Error("Incorrect password."));
     }
 
-    // check if user wants to change password, then hash before saving
+    // check if user wants to change password
     if (newPassword) {
+        // check if new password matches confirm password
+        if (newPassword !== confirmPassword) {
+            return next(new Error("Passwords do not match."));
+        }
+        
+        // check if new password is at least 8 characters long and has a number
+        if (newPassword.length < 8) {
+            return next(new Error("Password must be at least 8 characters long."));
+        }
+        if (!/[0-9]/.test(newPassword)) {
+            return next(new Error("Password must contain a number."));
+        }
+
+        // hash the new password
         let hashedPassword;
         try {
             hashedPassword = await bcrypt.hash(newPassword, 12);
@@ -158,6 +171,9 @@ const changeCredentials = async (req, res, next) => {
     }
 
     if (newUsername) {
+        if (newUsername.length < 4) {
+            return next(new Error("Username must be at least 4 characters long."));
+        }
         identifiedUser.username = newUsername;
     }
 
