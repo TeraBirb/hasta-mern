@@ -1,9 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+
+import { AuthContext } from "../Context/auth-context";
 
 import "./NavLinks.css";
 
 const NavLinks = (props) => {
-    const isAuthenticated = true; // Replace with your authentication logic
+    const auth = useContext(AuthContext);
 
     return (
         <ul className="nav-links">
@@ -19,21 +22,15 @@ const NavLinks = (props) => {
                 <NavLink to="/about">ABOUT</NavLink>
             </li>
             {/* To add conditional based on authentication */}
-            {/* {isAuthenticated ? (
+            {!auth.isLoggedIn ? (
                 <li>
                     <NavLink to="/authenticate">LOGIN</NavLink>
                 </li>
             ) : (
                 <li>
-                    <button>LOGIN</button>
+                    <button onClick={auth.logout}>LOGOUT</button>
                 </li>
-            )} */}
-            <li>
-                <NavLink to="/authenticate">LOGIN</NavLink>
-            </li>
-            <li>
-                <NavLink to="/authenticate">LOGOUT</NavLink>
-            </li>
+            )}
         </ul>
     );
 };

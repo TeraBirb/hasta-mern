@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/auth-context";
+import axios from "axios";
 
 import "./Authenticate.css";
 
 const Authenticate = () => {
+    const auth = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const [isLoginMode, setIsLoginMode] = useState(true);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const [isInvalidCredentials, setIsInvalidCredentials] = useState(false);
 
     // upon password input, check if password meets requirements,
     // add green checkmark if it does and red x if it doesn't
@@ -13,61 +24,115 @@ const Authenticate = () => {
     const [passwordLengthIsValid, setPasswordLengthIsValid] = useState(false);
     const [passwordsAreMatching, setPasswordsAreMatching] = useState(false);
 
-    const passwordInputHandler = (event) => {
-        const password = document.getElementById("password").value || "";
+    // SIGNUP Mode: Password requirements listener
+    useEffect(() => {
         setPasswordLengthIsValid(password.length >= 8);
         setPasswordHasNumber(/[0-9]/.test(password));
-    
-        // compare the password field to the confirmPassword field, if empty, set to ""
-        const confirmPassword =
-            document.getElementById("confirmPassword").value || "";
         setPasswordsAreMatching(password === confirmPassword);
-    };
-    
+    }, [password, confirmPassword]);
+
+    // SIGNUP Mode: isValid Setter
     useEffect(() => {
         const isValid =
             passwordHasNumber && passwordLengthIsValid && passwordsAreMatching;
         setIsPasswordValid(isValid);
-    
-        console.log(
-            passwordHasNumber,
-            passwordLengthIsValid,
-            passwordsAreMatching
-        );
     }, [passwordHasNumber, passwordLengthIsValid, passwordsAreMatching]);
-    
 
-    const loginHandler = () => {
-        console.log("Logging in...");
+    // Input field listeners
+    const handleUsernameInput = (event) => {
+        setUsername(event.target.value);
     };
 
-    const signupHandler = () => {
-        console.log("Signing up...");
-        console.log(
-            "Password is valid: ",
-            isPasswordValid,
-            "Password has number: ",
-            passwordHasNumber,
-            "Password is at least 8 characters long: ",
-            passwordLengthIsValid,
-            "Passwords match: ",
-            passwordsAreMatching
-        );
+    const handlePasswordInput = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const handleConfirmPasswordInput = (event) => {
+        setConfirmPassword(event.target.value);
+    };
+
+    // User logging in
+    const loginHandler = async () => {
+        if (isLoginMode) {
+            console.log("Logging in...");
+            try {
+                const response = await axios.post(
+                    process.env.REACT_APP_BACKEND_URL + "/user/login",
+                    {
+                        username,
+                        password,
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                console.log(response);
+                auth.login(response.data.userId, response.data.token);
+                navigate("/");
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    };
+
+    const signupHandler = async () => {
+        if (!isLoginMode) {
+            console.log("Signing up...");
+            console.log(
+                "Password is valid: ",
+                isPasswordValid,
+                "Password has number: ",
+                passwordHasNumber,
+                "Password is at least 8 characters long: ",
+                passwordLengthIsValid,
+                "Passwords match: ",
+                passwordsAreMatching
+            );
+            try {
+                const response = await axios.post(
+                    process.env.REACT_APP_BACKEND_URL + "/user/signup",
+                    {
+                        username,
+                        password,
+                        confirmPassword,
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                console.log(response);
+                auth.login(response.data.userId, response.data.token);
+                navigate("/");
+            } catch (err) {
+                console.log(err);
+            }
+        }
     };
 
     return (
         <div className="authenticate">
             <form>
                 <div className="form-control">
-                    <label htmlFor="email">Username</label>
-                    <input type="email" id="email" />
+                    {isInvalidCredentials && (
+                        <h3>Invalid username or password. Try Again</h3>
+                    )}
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        onInput={handleUsernameInput}
+                    />
                 </div>
                 <div className="form-control">
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
                         id="password"
-                        onInput={passwordInputHandler}
+                        onInput={handlePasswordInput}
                     />
                 </div>
                 <div className="form-actions">
@@ -94,7 +159,7 @@ const Authenticate = () => {
                             <input
                                 type="password"
                                 id="confirmPassword"
-                                onInput={passwordInputHandler}
+                                onInput={handleConfirmPasswordInput}
                             />
                             <div className="passwordRequirements">
                                 <p>
