@@ -28,7 +28,7 @@ const NavLinks = (props) => {
                 </li>
             ) : (
                 <li>
-                    <button onClick={auth.logout}>LOGOUT</button>
+                    <NavLink to="/account">ACCOUNT</NavLink>
                 </li>
             )}
         </ul>

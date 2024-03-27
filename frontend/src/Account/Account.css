@@ -1,4 +1,4 @@
-.authenticate {
+.account {
     color: white;
     background-color: gray;
     text-align: center;
@@ -9,14 +9,14 @@
     border-radius: 10px;
 }
 
-.authenticate form {
+.account form {
     /* Add a line break after each element */
     display: block;
     align-items: center;
 
 }
 
-.authenticate form input {
+.account form input {
     display: block;
     margin: 0.5rem 0;
     padding: 0.5rem;
@@ -25,7 +25,7 @@
     font-size: 1.2rem;
 } 
 
-.authenticate form button {
+.account form button {
     display: block;
     margin: 0.5rem auto;
     padding: 0.5rem;
@@ -36,11 +36,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
+    
 }
 
-.passwordRequirements p {
-    width: 100%;
-    font-size: 1rem;
-    margin: 0 auto;
-    padding: 0;
+.account button:disabled {
+    opacity: 0.5;
+    cursor: default;
 }

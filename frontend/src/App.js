@@ -17,6 +17,7 @@ import About from "./About/About";
 import Authenticate from "./Authenticate/Authenticate";
 import Listing from "./Search/Listing";
 import Favories from "./Favorites/Favorites";
+import Account from "./Account/Account";
 
 // App.js contains routes and navigation
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/listing/:lid" element={<Listing />} />
             <Route path="/about" element={<About />} />
             <Route path="/authenticate" element={<Authenticate />} />
+            <Route path="/account" element={<Account />} />
             {/* if path not found, redirect to path / */}
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
