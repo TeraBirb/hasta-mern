@@ -51,17 +51,17 @@ const getListingsByUserId = async (req, res, next) => {
 
     let userWithListings;
     try {
-        userWithListings = await User.findById(userId).populate("listings");
+        userWithListings = await User.findById(userId).populate("favorites");
     } catch (err) {
         console.log(err);
         return next(new Error("Could not find user."));
     }
 
-    if (!userWithListings || userWithListings.listings.length === 0) {
+    if (!userWithListings || userWithListings.favorites.length === 0) {
         return next(new Error("No listings found. Maybe add some?"));
     }
 
-    res.json(userWithListings.listings);
+    res.json(userWithListings.favorites);
 };
 
 // PATCH Request "api/listing/save"
