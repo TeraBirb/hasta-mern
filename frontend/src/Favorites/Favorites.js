@@ -1,16 +1,42 @@
-import "./favorites.css";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const favorites = () => {
+const Favorites = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // grab userID from Context
+        const userId = "66030a8e5fc33f570f2d5945";
+        const fetchFavorites = async () => {
+            try {
+                const response = await axios.get(
+                    process.env.REACT_APP_BACKEND_URL +
+                        "/listing/user/" +
+                        userId
+                );
+                const data = response.data;
+
+                if (response.status !== 200) {
+                    throw new Error(data);
+                }
+
+                console.log(data);
+                navigate("/results", { state: { data: data } });
+                window.scrollTo(0, 0);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchFavorites();
+    }, []);
+
     return (
-        <div className="favorites">
-            <h2>Favorites works!</h2>
-            <ul>
-                <li>Favorite 1</li>
-                <li>Favorite 2</li>
-                <li>Favorite 3</li>
-            </ul>
+        <div>
+            <h2>Loading...</h2>
         </div>
     );
 };
 
-export default favorites;
+export default Favorites;
