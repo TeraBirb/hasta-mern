@@ -151,9 +151,11 @@ const ResultsList = () => {
                             id={result.id}
                             type={result.description.type}
                             description={result.description}
+                            contact={result.contact}
                             photos={result.photos}
                             price={result.price}
                             location={result.location}
+                            tags={result.tags}
                         />
                     );
                 })}

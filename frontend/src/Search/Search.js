@@ -113,6 +113,7 @@ const Search = () => {
                     price: result.list_price,
                     contact: result.href,
                     description: result.description,
+                    tags: result.tags,
                 };
             });
             console.log("extracted!");

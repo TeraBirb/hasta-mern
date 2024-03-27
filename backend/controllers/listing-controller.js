@@ -21,20 +21,28 @@ const getListingById = async (req, res, next) => {
 };
 
 // POST Request "api/listing/search"
-// THE MEAT AND POTATOES!!
 const saveResultstoDB = async (req, res, next) => {
-    const results = req.body;
+    const {photos, location, type, price, contact, tags, description} = req.body;
 
-    // insertMany the resuts into the database, woohooo
+    const createdListing = new Listing({
+        photos: photos,
+        location: location,
+        type: type,
+        price: price,
+        contact: contact,
+        tags: tags,
+        description: description
+    });
+    
     try {
-        insertedResults = await Listing.insertMany(results);
+        insertedResult = await createdListing.save();
     } catch (err) {
         console.log(err);
         return next(new Error("Could not save listings."));
     }
 
     console.log("Results saved to database.");
-    res.json(insertedResults);
+    res.json(insertedResult);
 };
 
 // GET Request "api/listing/user/:uid"
