@@ -22,8 +22,8 @@ const getListingById = async (req, res, next) => {
 
 // GET Request "api/listing/search/:query"
 // THE MEAT AND POTATOES!!
-const getListingsBySearch = async (req, res, next) => {
-    const query = req.params.query;
+const saveResultstoDB = async (req, res, next) => {
+    const { photos,  } = req.body;
 
     let listings;
     try {
@@ -126,7 +126,7 @@ const deleteListingFromFavorites = async (req, res, next) => {
 
 // export all methods
 exports.getListingById = getListingById;
-exports.getListingsBySearch = getListingsBySearch;
+exports.getListingsBySearch = saveResultstoDB;
 exports.getListingsByUserId = getListingsByUserId;
 exports.saveListing = saveListing;
 exports.deleteListingFromFavorites = deleteListingFromFavorites;

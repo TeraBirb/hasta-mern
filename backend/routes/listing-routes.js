@@ -12,7 +12,7 @@ const router = express.Router();
 router.get("/:lid", listingController.getListingById);
 
 // for search results, third-party API calls
-router.get("/search/:query", listingController.getListingsBySearch);
+router.post("/search", saveResultstoDB);
 
 // Dev only tool, to save listings to database
 router.post("/", listingController.devAddFake);

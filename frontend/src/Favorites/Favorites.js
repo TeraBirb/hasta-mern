@@ -1,19 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { AuthContext } from "../Context/auth-context";
+
 const Favorites = () => {
     const navigate = useNavigate();
+    const auth = useContext(AuthContext);
 
     useEffect(() => {
-        // grab userID from Context
-        const userId = "66030a8e5fc33f570f2d5945";
         const fetchFavorites = async () => {
             try {
                 const response = await axios.get(
                     process.env.REACT_APP_BACKEND_URL +
                         "/listing/user/" +
-                        userId
+                        auth.userId
                 );
                 const data = response.data;
 

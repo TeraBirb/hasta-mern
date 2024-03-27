@@ -93,6 +93,6 @@ export default App;
 // Add favorite functionality to listing page
 // Backend :)
 // Integrate :)
-// Add authorization on backend and frontend
+// Add authorization on backend and frontend :)
 // Backend
 // Frontend
