@@ -26,7 +26,7 @@ router.get("/user/:uid", listingController.getListingsByUserId);
 
 router.patch("/save", listingController.saveListing);
 
-router.delete("/:lid", listingController.deleteListingFromFavorites);
+router.delete("/:uid/:lid", listingController.deleteListingFromFavorites);
 
 // export express.Router() object to access this file from app.js
 module.exports = router;

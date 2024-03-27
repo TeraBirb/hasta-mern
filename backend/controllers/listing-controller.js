@@ -93,25 +93,29 @@ const saveListing = async (req, res, next) => {
     res.status(201).json({ identifiedUser, identifiedListing });
 };
 
-// DELETE Request "api/listing/:lid"
+// DELETE Request "api/listing/:uid/:lid"
 // When user clicks on "Remove from Favorites"
 const deleteListingFromFavorites = async (req, res, next) => {
+    const userId = req.params.uid;
     const listingId = req.params.lid;
 
-    let listing;
+    let identifiedUser;
     try {
-        listing = await Listing.findById(listingId);
+        identifiedUser = await User.findById(userId);
     } catch (err) {
         console.log(err);
-        return next(new Error("Could not find listing."));
+        return next(new Error("Could not find user or listing."));
     }
 
-    if (!listing) {
-        return next(new Error("Listing does not exist."));
+    const index = identifiedUser.favorites.indexOf(listingId);
+    if (index === -1) {
+        throw new Error("Listing not found in favorites.");
     }
+
+    identifiedUser.favorites.splice(index, 1);
 
     try {
-        await listing.remove();
+        await identifiedUser.save();
     } catch (err) {
         console.log(err);
         return next(new Error("Could not remove listing."));
