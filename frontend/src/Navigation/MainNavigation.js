@@ -1,54 +1,61 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import MainHeader from "./MainHeader";
 import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
-
 import "./MainNavigation.css";
 import Backdrop from "../UIElements/Backdrop";
 
-const MainNavigation = (props) => {
-    const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+class MainNavigation extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            drawerIsOpen: false
+        };
+    }
 
-    const openDrawerHandler = () => {
-        setDrawerIsOpen(true);
+    openDrawerHandler = () => {
+        this.setState({ drawerIsOpen: true });
     };
 
-    const closeDrawerHandler = () => {
-        setDrawerIsOpen(false);
+    closeDrawerHandler = () => {
+        this.setState({ drawerIsOpen: false });
     };
 
-    return (
-        // does not render any real element, just an empty element to fulfill single return value
-        <React.Fragment>
-            {/* instead of the old && conditional, use boolean prop show */}
-            <SideDrawer show={drawerIsOpen} onClick={closeDrawerHandler}>
-                <nav className="main-navigation__drawer-nav">
-                    <NavLinks />
-                </nav>
-            </SideDrawer>
-
-            {drawerIsOpen && <Backdrop onClick={closeDrawerHandler} />}
-
-            <header className="main-header">
-                <button
-                    className="main-navigation__menu-btn"
-                    onClick={openDrawerHandler}
+    render() {
+        return (
+            <React.Fragment>
+                <SideDrawer
+                    show={this.state.drawerIsOpen}
+                    onClick={this.closeDrawerHandler}
                 >
-                    <span />
-                    <span />
-                    <span />
-                </button>
-                <h1 className="main-navigation__title">
-                    {/* this could be an image of logo */}
-                    <Link to="/">Hasta!</Link>
-                </h1>
-                <nav className="main-navigation__header-nav">
-                    <NavLinks />
-                </nav>
-            </header>
-        </React.Fragment>
-    );
-};
+                    <nav className="main-navigation__drawer-nav">
+                        <NavLinks />
+                    </nav>
+                </SideDrawer>
+
+                {this.state.drawerIsOpen && (
+                    <Backdrop onClick={this.closeDrawerHandler} />
+                )}
+
+                <header className="main-header">
+                    <button
+                        className="main-navigation__menu-btn"
+                        onClick={this.openDrawerHandler}
+                    >
+                        <span />
+                        <span />
+                        <span />
+                    </button>
+                    <h1 className="main-navigation__title">
+                        <Link to="/">Hasta!</Link>
+                    </h1>
+                    <nav className="main-navigation__header-nav">
+                        <NavLinks />
+                    </nav>
+                </header>
+            </React.Fragment>
+        );
+    }
+}
 
 export default MainNavigation;
