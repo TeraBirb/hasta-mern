@@ -47,6 +47,8 @@ const ResultsList = () => {
         };
     });
 
+    // Get current date-time stamp
+    const currentDateTime = new Date().toLocaleString();
 
     return (
         <div className="resultsListWrapper">
@@ -77,27 +79,30 @@ const ResultsList = () => {
                 ))}
             </ul>
             {/* Report Table */}
-            
-            <table className="reportTable">
-                <thead>
-                    <tr>
-                        <th>Property Type</th>
-                        <th>Median Price</th>
-                        <th>Mean Price</th>
-                        <th>Maximum Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {propertyTypes.map((type) => (
-                        <tr key={type}>
-                            <td>{type.replace(/_/g, "-")}</td>
-                            <td>{pricesByType[type].medianPrice}</td>
-                            <td>{pricesByType[type].meanPrice}</td>
-                            <td>{pricesByType[type].maxPrice}</td>
+            <div className="reportTableWrapper">
+                <h2>Property Prices Report</h2>
+                <p>Report generated on: {currentDateTime}</p>
+                <table className="reportTable">
+                    <thead>
+                        <tr>
+                            <th>Property Type</th>
+                            <th>Median Price</th>
+                            <th>Mean Price</th>
+                            <th>Maximum Price</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {propertyTypes.map((type) => (
+                            <tr key={type}>
+                                <td>{type.replace(/_/g, "-")}</td>
+                                <td>{pricesByType[type].medianPrice}</td>
+                                <td>{pricesByType[type].meanPrice}</td>
+                                <td>{pricesByType[type].maxPrice}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

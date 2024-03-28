@@ -33,9 +33,8 @@ const Search = () => {
                 url: "https://us-real-estate.p.rapidapi.com/location/suggest",
                 params: { input: searchInput },
                 headers: {
-                    "X-RapidAPI-Key":
-                        "e357b96598mshfde163274ffcabep1f1e31jsn8e13ff618822",
-                    "X-RapidAPI-Host": "us-real-estate.p.rapidapi.com",
+                    "X-RapidAPI-Key": process.env.REACT_APP_USA_REAL_ESTATE_API_KEY,
+                    "X-RapidAPI-Host": process.env.REACT_APP_USA_REAL_ESTATE_API_HOST,
                 },
             };
 
@@ -70,8 +69,8 @@ const Search = () => {
                 },
                 headers: {
                     "X-RapidAPI-Key":
-                        "e357b96598mshfde163274ffcabep1f1e31jsn8e13ff618822",
-                    "X-RapidAPI-Host": "us-real-estate.p.rapidapi.com",
+                        process.env.REACT_APP_USA_REAL_ESTATE_API_KEY,
+                    "X-RapidAPI-Host": process.env.REACT_APP_USA_REAL_ESTATE_API_HOST,
                 },
             };
 
