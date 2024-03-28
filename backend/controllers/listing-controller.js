@@ -27,9 +27,12 @@ const getListingsCheck = async (req, res, next) => {
     const userId = req.params.uid;
     const listingId = req.params.lid;
 
+    let isListingInFavorites;
     let userWithListings;
     try {
         userWithListings = await User.findById(userId).populate("favorites");
+        isListingInFavorites = userWithListings.favorites.some(listing => listing._id.toString() === listingId);
+        
     }
     catch (err) {
         console.log(err);
@@ -41,14 +44,13 @@ const getListingsCheck = async (req, res, next) => {
     }
 
     // respond with true if listing is in favorites, false otherwise
-    res.json({ message: true });
+    res.json({ isListingInFavorites });
 };
 
-// GET Request "api/listing/user/:uid/:lid"
+// GET Request "api/listing/user/:uid/"
 // for populating Favorites page
 const getListingsByUserId = async (req, res, next) => {
     const userId = req.params.uid;
-    const listingId = req.params.lid;
 
     let userWithListings;
     try {
@@ -58,12 +60,11 @@ const getListingsByUserId = async (req, res, next) => {
         return next(new Error("Could not find user."));
     }
 
-    // if (!userWithListings || userWithListings.favorites.length === 0) {
-    //     return next(new Error("No listings found. Maybe add some?"));
-    // }
+    if (!userWithListings || userWithListings.favorites.length === 0) {
+        return next(new Error("No listings found. Maybe add some?"));
+    }
 
-    // res.json(userWithListings.favorites);
-    res.json(userWithListings);
+    res.json(userWithListings.favorites);
 };
 
 // The messiah of all requests

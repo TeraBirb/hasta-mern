@@ -40,7 +40,7 @@ const Listing = () => {
                         }
                     );
                     console.log(response.data);
-                    if (response.data.message === true) {
+                    if (response.data.isListingInFavorites === true) {
                         setIsFavorite(true);
                     }
                 } catch (err) {
