@@ -125,7 +125,7 @@ const Search = () => {
                     placeholder="Enter an address, city, or ZIP code"
                     onInput={(e) => setSearchInput(e.target.value)}
                 />
-                <button onClick={handleSearch}>Search</button>
+                <button onClick={handleSearch}>SEARCH</button>
             </div>
 
             <div className="filters">
@@ -171,7 +171,7 @@ const Search = () => {
                 </div>
                 <div className="filter-item">
                     <label htmlFor="">Property Type:</label>
-                    <div>
+                    <div className="propertyTypes">
                         {Object.entries(propertyTypes).map(([key, value]) => (
                             <label key={key}>
                                 <input
@@ -180,7 +180,7 @@ const Search = () => {
                                     checked={value}
                                     onChange={handleCheckboxChange}
                                 />
-                                {key.replace("_", " ")}
+                                {key.replace("_", "-")}
                             </label>
                         ))}
                     </div>
