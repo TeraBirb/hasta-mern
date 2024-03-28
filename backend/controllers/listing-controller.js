@@ -1,5 +1,6 @@
 const Listing = require("../models/listing");
 const User = require("../models/user");
+const { ObjectId } = require("mongoose").Types;
 
 // GET Request "api/listing/:lid"
 const getListingById = async (req, res, next) => {
@@ -21,29 +22,31 @@ const getListingById = async (req, res, next) => {
 };
 
 // POST Request "api/listing/search"
-const saveResultstoDB = async (req, res, next) => {
-    const {photos, location, type, price, contact, tags, description} = req.body;
+// const saveResultstoDB = async (req, res, next) => {
+//     const {_id, photos, location, type, price, contact, tags, description, user} = req.body;
 
-    const createdListing = new Listing({
-        photos: photos,
-        location: location,
-        type: type,
-        price: price,
-        contact: contact,
-        tags: tags,
-        description: description
-    });
+//     const createdListing = new Listing({
+//         _id: _id,
+//         photos: photos,
+//         location: location,
+//         type: type,
+//         price: price,
+//         contact: contact,
+//         tags: tags,
+//         description: description,
+//         user: user,
+//     });
     
-    try {
-        insertedResult = await createdListing.save();
-    } catch (err) {
-        console.log(err);
-        return next(new Error("Could not save listings."));
-    }
+//     try {
+//         insertedResult = await createdListing.save();
+//     } catch (err) {
+//         console.log(err);
+//         return next(new Error("Could not save listings."));
+//     }
 
-    console.log("Results saved to database.");
-    res.json(insertedResult);
-};
+//     console.log("Results saved to database.");
+//     res.json(insertedResult);
+// };
 
 // GET Request "api/listing/user/:uid"
 // for populating Favorites page
@@ -58,17 +61,42 @@ const getListingsByUserId = async (req, res, next) => {
         return next(new Error("Could not find user."));
     }
 
-    if (!userWithListings || userWithListings.favorites.length === 0) {
-        return next(new Error("No listings found. Maybe add some?"));
+    // if (!userWithListings || userWithListings.favorites.length === 0) {
+    //     return next(new Error("No listings found. Maybe add some?"));
+    // }
+
+    // res.json(userWithListings.favorites);
+    res.json(userWithListings);
+};
+
+// The messiah of all requests
+// POST Request "api/listing/saveAll"
+const saveAllListings = async (req, res, next) => {
+    // accepts an array with multiple objects in its body,
+    // save all of them to the database using insertMany
+    const listings = req.body;
+
+    let insertedListings;
+    try {
+        insertedListings = await Listing.insertMany(listings);
+    } catch (err) {
+        console.log(err);
+        return next(new Error("Could not save listings."));
     }
 
-    res.json(userWithListings.favorites);
+    console.log("Results saved to database.");
+    res.json(insertedListings);
 };
 
 // PATCH Request "api/listing/save"
 // When user clicks on "Add to Favorites"
+// V1
 const saveListing = async (req, res, next) => {
+    
     const { userId, listingId } = req.body;
+
+    // const listingObjectId = new ObjectId(listingId);
+    console.log(userId, " ||| ", listingId);
 
     let identifiedUser, identifiedListing;
     try {
@@ -84,7 +112,10 @@ const saveListing = async (req, res, next) => {
     }
 
     try {
-        await identifiedUser.favorites.push(identifiedListing);
+        console.log(identifiedUser);
+        // identifiedUser.favorites.push(listingId);
+        // identifiedUser.favorites.push(identifiedListing._id);
+        identifiedUser.favorites.push(identifiedListing);
         await identifiedUser.save();
     } catch (err) {
         console.log(err);
@@ -94,6 +125,7 @@ const saveListing = async (req, res, next) => {
     res.status(201).json({ identifiedUser, identifiedListing });
 };
 
+
 // DELETE Request "api/listing/:uid/:lid"
 // When user clicks on "Remove from Favorites"
 const deleteListingFromFavorites = async (req, res, next) => {
@@ -102,33 +134,30 @@ const deleteListingFromFavorites = async (req, res, next) => {
 
     let identifiedUser;
     try {
+        // Find the user by userId
         identifiedUser = await User.findById(userId);
-    } catch (err) {
-        console.log(err);
-        return next(new Error("Could not find user or listing."));
-    }
 
-    const index = identifiedUser.favorites.indexOf(listingId);
-    if (index === -1) {
-        throw new Error("Listing not found in favorites.");
-    }
+        if (!identifiedUser) {
+            throw new Error("User not found.");
+        }
+        
+        // Remove the listingId from the favorites array
+        identifiedUser.favorites.pull(listingId);
 
-    identifiedUser.favorites.splice(index, 1);
-
-    try {
+        // Save the user after removing the listing from favorites
         await identifiedUser.save();
+
+        res.json({ message: "Listing removed from favorites." });
     } catch (err) {
         console.log(err);
         return next(new Error("Could not remove listing."));
     }
-
-    res.json({ message: "Listing removed from favorites." });
 };
-
 // export all methods
 exports.getListingById = getListingById;
-exports.saveResultstoDB = saveResultstoDB;
+// exports.saveResultstoDB = saveResultstoDB;
 exports.getListingsByUserId = getListingsByUserId;
+exports.saveAllListings = saveAllListings;
 exports.saveListing = saveListing;
 exports.deleteListingFromFavorites = deleteListingFromFavorites;
 

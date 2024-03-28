@@ -3,55 +3,6 @@ import axios from "axios";
 
 import "./Search.css";
 
-// DUMMY DATA TO SAVE TO DB
-const DUMMY_DATA = [
-    {
-        photos: [
-            "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?cs=srgb&dl=pexels-pixabay-259588.jpg&fm=jpg",
-            "https://st.depositphotos.com/1658611/2932/i/450/depositphotos_29329143-stock-photo-street-of-residential-houses.jpg",
-            "https://img.freepik.com/free-photo/house-isolated-field_1303-23773.jpg",
-        ],
-        address: "a",
-        type: "House",
-        price: 4000,
-        beds: 3,
-        baths: 2,
-        sqft: 2000,
-        contact:
-            "https://www.zillow.com/apartments/sunnyvale-ca/ironworks/9VG7n7/",
-    },
-    {
-        photos: [
-            "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?cs=srgb&dl=pexels-pixabay-259588.jpg&fm=jpg",
-            "https://st.depositphotos.com/1658611/2932/i/450/depositphotos_29329143-stock-photo-street-of-residential-houses.jpg",
-            "https://img.freepik.com/free-photo/house-isolated-field_1303-23773.jpg",
-        ],
-        address: "b",
-        type: "Condo",
-        price: 4200,
-        beds: 4,
-        baths: 3,
-        sqft: 2200,
-        contact:
-            "https://www.zillow.com/apartments/sunnyvale-ca/ironworks/9VG7n7/",
-    },
-    {
-        photos: [
-            "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?cs=srgb&dl=pexels-pixabay-259588.jpg&fm=jpg",
-            "https://st.depositphotos.com/1658611/2932/i/450/depositphotos_29329143-stock-photo-street-of-residential-houses.jpg",
-            "https://img.freepik.com/free-photo/house-isolated-field_1303-23773.jpg",
-        ],
-        address: "c",
-        type: "Condo",
-        price: 4200,
-        beds: 4,
-        baths: 3,
-        sqft: 2200,
-        contact:
-            "https://www.zillow.com/apartments/sunnyvale-ca/ironworks/9VG7n7/",
-    },
-];
-
 const options = {
     method: "GET",
     url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
@@ -107,7 +58,6 @@ const Search = () => {
             // extract only data we need
             const extractedData = results.map((result) => {
                 return {
-                    id: result.listing_id,
                     photos: result.photos,
                     location: result.location,
                     price: result.list_price,
@@ -116,12 +66,25 @@ const Search = () => {
                     tags: result.tags,
                 };
             });
-            console.log("extracted!");
-            console.log(extractedData);
+            console.log("extracted! and saving all to database!");
+            // console.log(extractedData);
+            // save to database
+            try {
+                const createdDocs = await axios.post(
+                    process.env.REACT_APP_BACKEND_URL + "/listing/saveAll",
+                    extractedData
+                );
+                console.log("Here are the created docs!");
+                console.log(createdDocs);
+                const passedDocs = createdDocs.data;
+                // attach data as state to navigate
+                navigate("/results", { state: { data: passedDocs } });
+                window.scrollTo(0, 0);
+            } catch (err) {
+                console.log(err);
+            }
 
-            // attach data as state to navigate
-            navigate("/results", { state: { data: extractedData } });
-            window.scrollTo(0, 0);
+
         } catch (error) {
             console.error(error);
         }

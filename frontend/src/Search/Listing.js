@@ -49,7 +49,7 @@ const Listing = () => {
         checkFavorite();
     }, [auth.isLoggedIn, isFavorite]);
 
-    const handleFavorite = () => {
+    const handleFavorite = async () => {
         if (!auth.isLoggedIn) {
             console.log("log in first!")
             return;
@@ -60,48 +60,27 @@ const Listing = () => {
         if (isFavorite) {
             // remove from favorites
             console.log("removing");
-            // try {
-            //     axios.delete(
-            //         process.env.REACT_APP_BACKEND_URL + "/listing/" + auth.userId + "/" + listing.id,
-            //         {
-            //             headers: {
-            //                 Authorization: `Bearer ${auth.token}`,
-            //             }
-            //         }
-            //     );
-            // } catch (err) {
-            //     console.log(err);
-            // }
-        } else {    
-            // add to favorites
-            // Tentative design: save listing to database when user clicks on "Add to Favorites"
             try {
-                axios.post(
-                    process.env.REACT_APP_BACKEND_URL + "/listing/search",
-                    {
-                        photos: listing.photos,
-                        location: listing.location,
-                        type: listing.type,
-                        price: listing.price,
-                        contact: listing.contact,
-                        tags: listing.tags,
-                        description: listing.description,
-                    },
+                await axios.delete(
+                    process.env.REACT_APP_BACKEND_URL + "/listing/" + auth.userId + "/" + listing.id,
                     {
                         headers: {
                             Authorization: `Bearer ${auth.token}`,
-                        },
+                        }
                     }
                 );
             } catch (err) {
                 console.log(err);
             }
+        } else {    
+            // add to favorites
             try {
-                axios.patch(
+                console.log(listing.id);
+                await axios.patch(
                     process.env.REACT_APP_BACKEND_URL + "/listing/save",
                     {
                         userId: auth.userId,
-                        listingId: listing.id,
+                        listingId: listing.id
                     },
                     {
                         headers: {

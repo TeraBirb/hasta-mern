@@ -8,30 +8,30 @@ const Favorites = () => {
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
 
-    useEffect(() => {
-        const fetchFavorites = async () => {
-            try {
-                const response = await axios.get(
-                    process.env.REACT_APP_BACKEND_URL +
-                        "/listing/user/" +
-                        auth.userId
-                );
-                const data = response.data;
+    // useEffect(() => {
+    //     const fetchFavorites = async () => {
+    //         try {
+    //             const response = await axios.get(
+    //                 process.env.REACT_APP_BACKEND_URL +
+    //                     "/listing/user/" +
+    //                     auth.userId
+    //             );
+    //             const data = response.data;
 
-                if (response.status !== 200) {
-                    throw new Error(data);
-                }
+    //             if (response.status !== 200) {
+    //                 throw new Error(data);
+    //             }
 
-                console.log(data);
-                navigate("/results", { state: { data: data } });
-                window.scrollTo(0, 0);
-            } catch (err) {
-                console.error(err);
-            }
-        };
+    //             console.log(data);
+    //             navigate("/results", { state: { data: data } });
+    //             window.scrollTo(0, 0);
+    //         } catch (err) {
+    //             console.error(err);
+    //         }
+    //     };
 
-        fetchFavorites();
-    }, []);
+    //     fetchFavorites();
+    // }, []);
 
     return (
         <div>
