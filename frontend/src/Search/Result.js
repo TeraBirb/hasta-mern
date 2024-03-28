@@ -6,7 +6,7 @@ const Result = (props) => {
     const navigate = useNavigate();
     const address = props.location.address;
     const streetAddress = `${address.street_number} ${address.street_name} ${
-        address.street_suffix
+        address.street_suffix || ""
     } ${address.unit || ""}`;
     const cityState = `${address.city}, ${address.state_code}`;
 

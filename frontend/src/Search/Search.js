@@ -70,7 +70,7 @@ const Search = () => {
                 headers: {
                     "X-RapidAPI-Key":
                         process.env.REACT_APP_USA_REAL_ESTATE_API_KEY,
-                    "X-RapidAPI-Host": process.env.REACT_APP_USA_REAL_ESTATE_API_HOST,
+                    "X-RapidAPI-Host": process.env.REACT_APP_USA_REAL_ESTATE_API_HOST
                 },
             };
 
