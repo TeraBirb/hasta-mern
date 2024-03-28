@@ -21,7 +21,7 @@ router.post("/saveAll", listingController.saveAllListings);
 router.post("/", listingController.devAddFake);
 
 // User needs to be authenticated to access the routes below
-// router.use(checkAuth);
+router.use(checkAuth);
 
 // check if user has listing in favorites
 router.get("/check/:uid/:lid", listingController.getListingsCheck);
