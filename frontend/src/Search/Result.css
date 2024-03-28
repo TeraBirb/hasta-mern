@@ -1,5 +1,5 @@
 .results {
-    background-color: green;
+    /* background-color: green; */
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -11,10 +11,11 @@
 }
 
 .resultBox {
-    background-color: thistle;
+    color: white;
+    background-color: #47A297;
     margin: 10px auto;
     padding: 10px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 5px;
     width: 100%;
     transition: box-shadow 0.3s, width 0.3s, transform 0.3s;

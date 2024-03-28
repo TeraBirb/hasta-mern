@@ -1,5 +1,5 @@
 .resultsListWrapper {
-    background-color: cadetblue;
+    /* background-color: cadetblue; */
     margin: 0 auto;
     width: 80vw;
 }
@@ -20,7 +20,7 @@
 }
 
 .pagination li {
-    background-color: green;
+    background-color: #47A297;
     border-radius: 50%; /* Make it a circle */
     width: 30px;
     height: 30px;
@@ -38,10 +38,21 @@
     }
 
     &.active {
-        background-color: gray;
+        background-color: #f5ff64;
         cursor: default;
         pointer-events: none;
     }
+}
+
+.reportTableWrapper {
+    margin: 0 auto;
+    width: 50vw;
+    text-align: center;
+}
+
+.reportTableWrapper table {
+    width: 100%;
+    
 }
 
 @media (max-width: 768px) {
