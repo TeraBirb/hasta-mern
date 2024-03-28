@@ -2,8 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: white;
-    margin: 0.5rem 5rem;
+    /* color: black; */
+    margin: 0.5rem auto;
+    width: 50vw;
 }
 
 .about h2,

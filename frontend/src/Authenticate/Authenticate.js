@@ -5,6 +5,7 @@ import axios from "axios";
 
 import "./Authenticate.css";
 
+const GREEN_CHECK = "rgb(149, 235, 52)";
 const Authenticate = () => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
@@ -153,7 +154,7 @@ const Authenticate = () => {
                                 <p>
                                     Username must be at least 4 characters long{" "}
                                     {usernameLengthisValid ? (
-                                        <span style={{ color: "green" }}>
+                                        <span style={{ color: GREEN_CHECK }}>
                                             &#x2713;
                                         </span>
                                     ) : (
@@ -165,7 +166,7 @@ const Authenticate = () => {
                                 <p>
                                     Password must be at least 8 characters long{" "}
                                     {passwordLengthIsValid ? (
-                                        <span style={{ color: "green" }}>
+                                        <span style={{ color: GREEN_CHECK }}>
                                             &#x2713;
                                         </span>
                                     ) : (
@@ -177,7 +178,7 @@ const Authenticate = () => {
                                 <p>
                                     Password must contain at least one number{" "}
                                     {passwordHasNumber ? (
-                                        <span style={{ color: "green" }}>
+                                        <span style={{ color: GREEN_CHECK }}>
                                             &#x2713;
                                         </span>
                                     ) : (
@@ -189,7 +190,7 @@ const Authenticate = () => {
                                 <p>
                                     Password and confirm password must match{" "}
                                     {passwordsAreMatching ? (
-                                        <span style={{ color: "green" }}>
+                                        <span style={{ color: GREEN_CHECK }}>
                                             &#x2713;
                                         </span>
                                     ) : (

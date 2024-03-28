@@ -35,7 +35,7 @@ const Favorites = () => {
 
     return (
         <div>
-            <h2>Loading...</h2>
+            <h2 style={{ textAlign: "center" }}>Sign up or log in to start saving listings!</h2>
         </div>
     );
 };
