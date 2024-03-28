@@ -175,6 +175,7 @@ const Listing = () => {
                         href={listing.contact}
                         target="_blank"
                         rel="noopener noreferrer"
+                        className="contact"
                     >
                         Visit the Complete Listing
                     </a>
