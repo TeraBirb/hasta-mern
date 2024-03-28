@@ -80,7 +80,7 @@ const ResultsList = () => {
             </ul>
             {/* Report Table */}
             <div className="reportTableWrapper">
-                <h2>Property Prices Report</h2>
+                <h2>Rental Prices Report</h2>
                 <p>Report generated on: {currentDateTime}</p>
                 <table className="reportTable">
                     <thead>

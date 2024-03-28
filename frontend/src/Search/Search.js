@@ -7,6 +7,8 @@ import "./Search.css";
 const Search = () => {
     const navigate = useNavigate();
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const [searchInput, setSearchInput] = useState("");
     const [city, setCity] = useState("San Francisco");
     const [stateCode, setStateCode] = useState("CA");
@@ -25,6 +27,7 @@ const Search = () => {
 
     const handleSearch = async () => {
         console.log("Searching...");
+        setIsLoading(true);
 
         try {
             // Get city and state from location suggestion
@@ -106,6 +109,7 @@ const Search = () => {
         } catch (error) {
             console.error(error);
         }
+        setIsLoading(false);
     };
 
     const handleCheckboxChange = (event) => {
@@ -125,7 +129,7 @@ const Search = () => {
                     placeholder="Enter an address, city, or ZIP code"
                     onInput={(e) => setSearchInput(e.target.value)}
                 />
-                <button onClick={handleSearch}>SEARCH</button>
+                <button onClick={handleSearch}>{isLoading ? "SEARCHING..." : "SEARCH"}</button>
             </div>
 
             <div className="filters">
