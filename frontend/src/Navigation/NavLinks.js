@@ -1,38 +1,40 @@
+import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
-
 import { AuthContext } from "../Context/auth-context";
-
 import "./NavLinks.css";
 
-const NavLinks = (props) => {
-    const auth = useContext(AuthContext);
+class NavLinks extends Component {
+    static contextType = AuthContext;
 
-    return (
-        <ul className="nav-links">
-            <li>
-                <NavLink to="/" exact>
-                    HOME
-                </NavLink>
-            </li>
-            <li>
-                <NavLink to="/favorites">FAVORITES</NavLink>
-            </li>
-            <li>
-                <NavLink to="/about">ABOUT</NavLink>
-            </li>
-            {/* To add conditional based on authentication */}
-            {!auth.isLoggedIn ? (
+    render() {
+        const auth = this.context;
+
+        return (
+            <ul className="nav-links">
                 <li>
-                    <NavLink to="/authenticate">LOGIN</NavLink>
+                    <NavLink to="/" exact>
+                        HOME
+                    </NavLink>
                 </li>
-            ) : (
                 <li>
-                    <NavLink to="/account">ACCOUNT</NavLink>
+                    <NavLink to="/favorites">FAVORITES</NavLink>
                 </li>
-            )}
-        </ul>
-    );
-};
+                <li>
+                    <NavLink to="/about">ABOUT</NavLink>
+                </li>
+                {/* To add conditional based on authentication */}
+                {!auth.isLoggedIn ? (
+                    <li>
+                        <NavLink to="/authenticate">LOGIN</NavLink>
+                    </li>
+                ) : (
+                    <li>
+                        <NavLink to="/account">ACCOUNT</NavLink>
+                    </li>
+                )}
+            </ul>
+        );
+    }
+}
 
 export default NavLinks;
