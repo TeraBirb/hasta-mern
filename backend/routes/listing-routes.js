@@ -17,18 +17,18 @@ router.get("/:lid", listingController.getListingById);
 // the big save
 router.post("/saveAll", listingController.saveAllListings);
 
-// Dev only tool, to save listings to database
-router.post("/", listingController.devAddFake);
-
-// User needs to be authenticated to access the routes below
-router.use(checkAuth);
-
 // check if user has listing in favorites
 router.get("/check/:uid/:lid", listingController.getListingsCheck);
 
 // to access keys other than id (already taken up by first one),
 // for Favorites page
 router.get("/user/:uid", listingController.getListingsByUserId);
+
+// Dev only tool, to save listings to database
+router.post("/", listingController.devAddFake);
+
+// User needs to be authenticated to access the routes below
+router.use(checkAuth);
 
 router.patch("/save", listingController.saveListing);
 
