@@ -10,7 +10,7 @@ import "./Listing.css";
 
 const HEART_ICON_FALSE = "https://www.svgrepo.com/show/404845/black-heart.svg";
 const HEART_ICON_TRUE = "https://www.svgrepo.com/show/407319/red-heart.svg";
-const NO_INFO = "Visit main listing for more information.";
+const NO_INFO = " N/A ";
 
 const Listing = () => {
     const location = useLocation();
