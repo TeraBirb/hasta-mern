@@ -1,6 +1,6 @@
 .account {
     color: white;
-    background-color: gray;
+    background-color: #47A297;
     text-align: center;
     width: 60vw;
     max-width: 500px;
@@ -31,8 +31,8 @@
     padding: 0.5rem;
     width: 40%;
     font-size: 1.2rem;
-    background-color: white;
-    color: green;
+    background-color: #f5ff64;
+    /* color: green; */
     border: none;
     border-radius: 5px;
     cursor: pointer;
