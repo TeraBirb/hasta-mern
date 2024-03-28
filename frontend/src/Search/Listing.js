@@ -20,8 +20,12 @@ const Listing = () => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     const address = listing.location.address;
-    const streetAddress = `${address.street_number} ${address.street_name} ${address.street_suffix} ${address.unit}`;
+    const streetAddress = `${address.street_number} ${address.street_name} ${
+        address.street_suffix
+    } ${address.unit || ""}`;
     const cityState = `${address.city}, ${address.state_code}`;
+
+    // console.log(listing);
 
     useEffect(() => {
         const checkFavorite = async () => {
@@ -32,7 +36,11 @@ const Listing = () => {
                 console.log("checking favorites using useEffect");
                 try {
                     const response = await axios.get(
-                        process.env.REACT_APP_BACKEND_URL + "/listing/check/" + auth.userId + "/" + listing.id,
+                        process.env.REACT_APP_BACKEND_URL +
+                            "/listing/check/" +
+                            auth.userId +
+                            "/" +
+                            listing.id,
                         {
                             headers: {
                                 Authorization: `Bearer ${auth.token}`,
@@ -54,7 +62,7 @@ const Listing = () => {
 
     const handleFavorite = async () => {
         if (!auth.isLoggedIn) {
-            console.log("log in first!")
+            console.log("log in first!");
             return;
         }
         setIsFavorite((prevIsFavorite) => !prevIsFavorite);
@@ -65,17 +73,21 @@ const Listing = () => {
             console.log("removing");
             try {
                 await axios.delete(
-                    process.env.REACT_APP_BACKEND_URL + "/listing/" + auth.userId + "/" + listing.id,
+                    process.env.REACT_APP_BACKEND_URL +
+                        "/listing/" +
+                        auth.userId +
+                        "/" +
+                        listing.id,
                     {
                         headers: {
                             Authorization: `Bearer ${auth.token}`,
-                        }
+                        },
                     }
                 );
             } catch (err) {
                 console.log(err);
             }
-        } else {    
+        } else {
             // add to favorites
             try {
                 console.log(listing.id);
@@ -83,7 +95,7 @@ const Listing = () => {
                     process.env.REACT_APP_BACKEND_URL + "/listing/save",
                     {
                         userId: auth.userId,
-                        listingId: listing.id
+                        listingId: listing.id,
                     },
                     {
                         headers: {
@@ -94,9 +106,7 @@ const Listing = () => {
             } catch (err) {
                 console.log(err);
             }
-            
         }
-
     };
 
     return (
@@ -127,9 +137,23 @@ const Listing = () => {
                     <h4>{streetAddress || NO_INFO}</h4>
                     <h4>{cityState || NO_INFO}</h4>
                     <h4>
-                        {`${listing.description.beds} bed, ${listing.description.baths} bath`}
+                        {`${
+                            listing.description.beds ||
+                            listing.description.beds_min ||
+                            listing.description.beds_max
+                        } bed, ${
+                            listing.description.baths ||
+                            listing.description.baths_min ||
+                            listing.description.baths_max
+                        } Bath`}
                     </h4>
-                    <h4>{listing.description.sqft || NO_INFO} square feet</h4>
+                    <h4>
+                        {listing.description.sqft ||
+                            listing.description.sqft_min ||
+                            listing.description.sqft_max ||
+                            NO_INFO}{" "}
+                        square feet
+                    </h4>
                     <div className="mapContainer">
                         <Map
                             center={{
@@ -143,7 +167,8 @@ const Listing = () => {
                     <p>More information</p>
                     <ul>
                         {listing.tags.map((tag, index) => {
-                            return <li key={index}>{tag}</li>;
+                            const formattedTag = tag.replace(/_/g, " "); // Replace underscores with spaces
+                            return <li key={index}>{formattedTag}</li>;
                         })}
                     </ul>
                     <a

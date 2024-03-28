@@ -4,32 +4,10 @@ import axios from "axios";
 
 import "./Search.css";
 
-let options = {
-    method: "GET",
-    url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
-    params: {
-        city: "San Francisco",
-        state_code: "CA",
-        limit: "42",
-        beds_min: "1",
-        baths_min: "1",
-        price_min: "1000",
-        price_max: "5000",
-        property_type:
-            "apartment, single_family, condo, townhouse, multi_family, land, mobile, other",
-        expand_search_radius: "25",
-        //  1|5|10|25|50
-    },
-    headers: {
-        "X-RapidAPI-Key": "e357b96598mshfde163274ffcabep1f1e31jsn8e13ff618822",
-        "X-RapidAPI-Host": "us-real-estate.p.rapidapi.com",
-    },
-};
-
-// handleSearch function that redirects to a ResultsList component
 const Search = () => {
     const navigate = useNavigate();
 
+    const [searchInput, setSearchInput] = useState("");
     const [city, setCity] = useState("San Francisco");
     const [stateCode, setStateCode] = useState("CA");
     const [minPrice, setMinPrice] = useState("");
@@ -47,73 +25,89 @@ const Search = () => {
 
     const handleSearch = async () => {
         console.log("Searching...");
-        options.params.city = city;
-        options.params.state_code = stateCode;
-        options.params.price_min = minPrice;
-        options.params.price_max = maxPrice;
-        options.params.beds_min = minBedrooms;
-        options.params.baths_min = minBathrooms;
 
-        const selectedPropertyTypes = Object.entries(propertyTypes)
-            .filter(([key, value]) => value === true)
-            .map(([key]) => key)
-            .join(", ");
-        options.params.property_type = selectedPropertyTypes;
-        // directs to /results
-        // US REAL ESTATE API
         try {
+            // Get city and state from location suggestion
+            const locationSuggestionOptions = {
+                method: "GET",
+                url: "https://us-real-estate.p.rapidapi.com/location/suggest",
+                params: { input: searchInput },
+                headers: {
+                    "X-RapidAPI-Key":
+                        "e357b96598mshfde163274ffcabep1f1e31jsn8e13ff618822",
+                    "X-RapidAPI-Host": "us-real-estate.p.rapidapi.com",
+                },
+            };
+
+            const locationResponse = await axios.request(
+                locationSuggestionOptions
+            );
+            console.log(locationResponse.data);
+            const suggestedCity = locationResponse.data.data[0].city;
+            const suggestedStateCode = locationResponse.data.data[0].state_code;
+            setCity(suggestedCity);
+            setStateCode(suggestedStateCode);
+
+            // Prepare options for the second request with updated city and state
+            const selectedPropertyTypes = Object.entries(propertyTypes)
+                .filter(([key, value]) => value === true)
+                .map(([key]) => key)
+                .join(", ");
+
+            const options = {
+                method: "GET",
+                url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
+                params: {
+                    city: suggestedCity,
+                    state_code: suggestedStateCode,
+                    limit: "42",
+                    beds_min: minBedrooms,
+                    baths_min: minBathrooms,
+                    price_min: minPrice,
+                    price_max: maxPrice,
+                    property_type: selectedPropertyTypes,
+                    expand_search_radius: "25",
+                },
+                headers: {
+                    "X-RapidAPI-Key":
+                        "e357b96598mshfde163274ffcabep1f1e31jsn8e13ff618822",
+                    "X-RapidAPI-Host": "us-real-estate.p.rapidapi.com",
+                },
+            };
+
+            // Make the second request
             const response = await axios.request(options);
             const results = response.data.data.home_search.results;
             console.log(results);
-            // extract only data we need
-            const extractedData = results.map((result) => {
-                return {
-                    photos: result.photos,
-                    location: result.location,
-                    price: result.list_price,
-                    contact: result.href,
-                    description: result.description,
-                    tags: result.tags,
-                };
-            });
-            console.log("extracted! and saving all to database!");
-            // console.log(extractedData);
-            // save to database
-            try {
-                const createdDocs = await axios.post(
-                    process.env.REACT_APP_BACKEND_URL + "/listing/saveAll",
-                    extractedData
-                );
-                console.log("Here are the created docs!");
-                console.log(createdDocs);
-                const passedDocs = createdDocs.data;
-                // attach data as state to navigate
-                navigate("/results", { state: { data: passedDocs } });
-                window.scrollTo(0, 0);
-            } catch (err) {
-                console.log(err);
-            }
+
+            // Extract data and save to database
+            const extractedData = results.map((result) => ({
+                photos: result.photos,
+                location: result.location,
+                price:
+                    result.list_price ||
+                    result.list_price_min ||
+                    result.list_price_max,
+                contact: result.href,
+                description: result.description,
+                tags: result.tags,
+            }));
+
+            console.log("Extracted data and saving all to database!");
+            const createdDocs = await axios.post(
+                process.env.REACT_APP_BACKEND_URL + "/listing/saveAll",
+                extractedData
+            );
+            console.log("Here are the created docs!");
+            console.log(createdDocs.data);
+            
+            // Redirect to results page
+            navigate("/results", { state: { data: createdDocs.data } });
+            window.scrollTo(0, 0);
         } catch (error) {
             console.error(error);
         }
     };
-
-    // const handleSearch = () => {
-    //     options.params.city = city;
-    //     options.params.state_code = stateCode;
-    //     options.params.price_min = minPrice;
-    //     options.params.price_max = maxPrice;
-    //     options.params.beds_min = minBedrooms;
-    //     options.params.baths_min = minBathrooms;
-
-    //     const selectedPropertyTypes = Object.entries(propertyTypes)
-    //         .filter(([key, value]) => value === true)
-    //         .map(([key]) => key)
-    //         .join(", ");
-    //     options.params.property_type = selectedPropertyTypes;
-
-    //     console.log(options.params);
-    // };
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
@@ -125,12 +119,12 @@ const Search = () => {
 
     return (
         <div className="search">
-            {/* <h2>Discover the perfect place to call home</h2> */}
             <h3>Browse homes and apartments for rent</h3>
             <div className="search__main">
                 <input
                     type="text"
                     placeholder="Enter an address, city, or ZIP code"
+                    onInput={(e) => setSearchInput(e.target.value)}
                 />
                 <button onClick={handleSearch}>Search</button>
             </div>
