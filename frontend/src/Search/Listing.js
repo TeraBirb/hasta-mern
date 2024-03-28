@@ -29,25 +29,28 @@ const Listing = () => {
                 // fetch user's favorites
                 // check if this listing is in user's favorites
                 // setIsFavorite(true);
+                console.log("checking favorites using useEffect");
                 try {
                     const response = await axios.get(
-                        process.env.REACT_APP_BACKEND_URL + "/listing/user/" + auth.userId,
+                        process.env.REACT_APP_BACKEND_URL + "/listing/check/" + auth.userId + "/" + listing.id,
                         {
                             headers: {
                                 Authorization: `Bearer ${auth.token}`,
                             },
                         }
                     );
-                    if (response.data.favorites.includes(listing.id)) {
+                    console.log(response.data);
+                    if (response.data.message === true) {
                         setIsFavorite(true);
                     }
                 } catch (err) {
                     console.log(err);
                 }
             }
+            // console.log("isFavorite: ", isFavorite);
         };
         checkFavorite();
-    }, [auth.isLoggedIn, isFavorite]);
+    }, []);
 
     const handleFavorite = async () => {
         if (!auth.isLoggedIn) {

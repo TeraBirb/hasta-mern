@@ -21,37 +21,34 @@ const getListingById = async (req, res, next) => {
     res.json(listing);
 };
 
-// POST Request "api/listing/search"
-// const saveResultstoDB = async (req, res, next) => {
-//     const {_id, photos, location, type, price, contact, tags, description, user} = req.body;
+// GET request "api/listing/check/:uid"
+// for checking if a listing is in favorites
+const getListingsCheck = async (req, res, next) => {
+    const userId = req.params.uid;
+    const listingId = req.params.lid;
 
-//     const createdListing = new Listing({
-//         _id: _id,
-//         photos: photos,
-//         location: location,
-//         type: type,
-//         price: price,
-//         contact: contact,
-//         tags: tags,
-//         description: description,
-//         user: user,
-//     });
-    
-//     try {
-//         insertedResult = await createdListing.save();
-//     } catch (err) {
-//         console.log(err);
-//         return next(new Error("Could not save listings."));
-//     }
+    let userWithListings;
+    try {
+        userWithListings = await User.findById(userId).populate("favorites");
+    }
+    catch (err) {
+        console.log(err);
+        return next(new Error("Could not find user."));
+    }
 
-//     console.log("Results saved to database.");
-//     res.json(insertedResult);
-// };
+    if (!userWithListings) {
+        return next(new Error("User does not exist."));
+    }
 
-// GET Request "api/listing/user/:uid"
+    // respond with true if listing is in favorites, false otherwise
+    res.json({ message: true });
+};
+
+// GET Request "api/listing/user/:uid/:lid"
 // for populating Favorites page
 const getListingsByUserId = async (req, res, next) => {
     const userId = req.params.uid;
+    const listingId = req.params.lid;
 
     let userWithListings;
     try {
@@ -155,7 +152,7 @@ const deleteListingFromFavorites = async (req, res, next) => {
 };
 // export all methods
 exports.getListingById = getListingById;
-// exports.saveResultstoDB = saveResultstoDB;
+exports.getListingsCheck = getListingsCheck;
 exports.getListingsByUserId = getListingsByUserId;
 exports.saveAllListings = saveAllListings;
 exports.saveListing = saveListing;
