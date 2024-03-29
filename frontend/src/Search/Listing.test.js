@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../Context/auth-context';
 import axios from 'axios';
 
+// Mocking axios and react-router-dom's useLocation, components for isolation
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({
   useLocation: jest.fn(),
@@ -12,8 +13,9 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../UIElements/NavigateBack', () => () => <div>Mock NavigateBack</div>);
 jest.mock('../UIElements/Map', () => () => <div>Mock Map</div>);
 
-
+// Describing a test suite for the Listing Component
 describe('Listing Component', () => {
+  // Mock data to simulate a listing object and authentication context
   const mockListing = {
     id: '123',
     title: 'Test Listing',
@@ -43,10 +45,12 @@ describe('Listing Component', () => {
     token: 'token',
   };
 
+  // Setting up mocks for each test
   beforeEach(() => {
     useLocation.mockImplementation(() => ({ state: mockListing }));
   });
 
+  // Test to verify that the Listing component renders correctly, favorite status is checked on load
   it('renders correctly and checks favorite status on load', async () => {
     axios.get.mockResolvedValue({ data: { isListingInFavorites: true } });
 
@@ -61,6 +65,7 @@ describe('Listing Component', () => {
     expect(await findByText('Test Listing')).toBeInTheDocument();
   });
 
+  // Test to verify that clicking the favorite icon toggles the favorite status of the listing
   it('toggles favorite status when clicked', async () => {
     axios.get.mockResolvedValue({ data: { isListingInFavorites: false } });
     axios.patch.mockResolvedValue({});

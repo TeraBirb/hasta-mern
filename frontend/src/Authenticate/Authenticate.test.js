@@ -36,7 +36,7 @@ describe('Authenticate Component', () => {
     expect(screen.queryByText(/confirm password/i)).not.toBeInTheDocument();
   });
 
-  // New test case for invalid credentials
+  // Test case for invalid credentials
   it('shows an error message on invalid login credentials', async () => {
     // Mock axios to simulate a failed login attempt
     axios.post.mockRejectedValue(new Error('Invalid credentials'));
