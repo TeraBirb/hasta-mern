@@ -47,15 +47,3 @@ mongoose
     .catch((err) => {
         console.log(err);
     });
-
-
-// Backend
-    // Create API :)
-    // Create routes :)
-    // Create controllers for CRUD :)
-    // Create models :)
-    // Create middleware :)
-    // Create error handling :)
-    // Create authentication :)
-    // Create authorization :)
-    // Finalize US Real Estate Listings API

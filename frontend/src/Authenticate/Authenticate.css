@@ -44,3 +44,16 @@
     margin: 0 auto;
     padding: 0;
 }
+
+@media screen and (max-width: 768px){
+    .authenticate {
+        /* Add a line break after each element */
+        width: 90vw;
+
+    }
+    .authenticate form button {
+        margin: 1rem auto;
+        width: 80%;
+    }
+    
+}

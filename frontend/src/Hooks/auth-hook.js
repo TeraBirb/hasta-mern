@@ -17,7 +17,8 @@ export const useAuth = () => {
         const tokenExpirationDateNonState =
             expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
         setTokenExpirationDate(tokenExpirationDateNonState);
-        // store token in local storage: its ok AS LONG AS the app is not vulnerable to cross-site scripting in the first place
+        // store token in local storage: its ok AS LONG AS the app is not 
+        // vulnerable to cross-site scripting in the first place
         localStorage.setItem(
             "userData",
             JSON.stringify({

@@ -1,0 +1,43 @@
++--------------------+          +--------------------+           
+|  React Frontend    |          |     Search API     |         
++--------------------+          +--------------------+        
+|  - User Interface  |          | - "/location"      |
+|  - Search ----------------->  |   for search input |
+|  - Reports         |      ----- - "/v2/rentals"    |
+|  - Authentication  |     |    |   for  results     |
++--------------------+     |    +--------------------+
+|  - axios requests  |     |    | - third party      |
+|  - login/singup    |     |    | - 300 free calls   |              
+|  - save listing    |     |    |       per month    |
++--------------------+     |    | - 42 max results   | 
+    |           ^          |    |       per search   |  
+ Requests    Returns       |    +--------------------+ 
+   data     responses      |     
+    v           |          |    
++--------------------+     |    +--------------------+     
+| Express.js Backend |     |    |       User         |
++--------------------+     |    +--------------------+  
+| - "middleman"      |     |    | - id               |
+| - API routing + <--------     | - username         |
+|   controllers      |          | - password         |
+| - Primary auth     |     -->  | - favorites -----------
+|                    |     |    | - JWT auth token   |  |
++--------------------+     |    +--------------------+  |
+| - Mongoose         |     |    | - changeUsername() |  |
+| - User Schema      |     |    | - changePassword() |  |
+| - Listing Schema   |     |    +--------------------+  |
++--------------------+     |                            |
+     |         ^           |                        array of
+    CRUD operations        |                            |
+     v         |           |                            |
++-------------------+      |   +--------------------+   |
+|    MongoDB Atlas  |      |   |       Listing      | <--
++-------------------+      |   +--------------------+ 
+| - hasta database  |      |   | - id               |
+| - users collection--------   | - location         |
+| - listings        |          | - photos           |
+|   collection ------------->  | - price            |       
+| - scalable        |          | - contact          |
+|                   |          | - tags             |
++-------------------+          | - description      |
+                               +--------------------+  
