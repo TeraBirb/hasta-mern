@@ -67,7 +67,6 @@ const getListingsByUserId = async (req, res, next) => {
     res.json(userWithListings.favorites);
 };
 
-// The messiah of all requests
 // POST Request "api/listing/saveAll"
 const saveAllListings = async (req, res, next) => {
     // accepts an array with multiple objects in its body,
@@ -84,6 +83,11 @@ const saveAllListings = async (req, res, next) => {
 
     console.log("Results saved to database.");
     res.json(insertedListings);
+};
+
+// POST Request "api/listing/searchListings/???/"
+const searchListings = async (req, res, next) => {
+    // LIMITED USAGE HERE
 };
 
 // PATCH Request "api/listing/save"
@@ -156,6 +160,7 @@ exports.getListingById = getListingById;
 exports.getListingsCheck = getListingsCheck;
 exports.getListingsByUserId = getListingsByUserId;
 exports.saveAllListings = saveAllListings;
+exports.searchListings = searchListings;
 exports.saveListing = saveListing;
 exports.deleteListingFromFavorites = deleteListingFromFavorites;
 

@@ -1,11 +1,15 @@
 const express = require("express");
 const checkAuth = require("../middleware/check-auth");
+const rateLimit = require("../middleware/rate-limit");
 
 const listingController = require("../controllers/listing-controller");
 // const checkAuth = require("../middleware/check-auth");
 
 // dont express EXPRESS as a function. rather, use express.Router()
 const router = express.Router();
+
+// Apply rate limiting middleware only to the searchListings route
+router.post("/", rateLimit, listingController.searchListings)
 
 // same middleware methods as app or router() object
 // ":" means dynamic value, we don't know the exact value in advance
@@ -25,7 +29,7 @@ router.get("/check/:uid/:lid", listingController.getListingsCheck);
 router.get("/user/:uid", listingController.getListingsByUserId);
 
 // Dev only tool, to save listings to database
-router.post("/", listingController.devAddFake);
+router.post("/dev", listingController.devAddFake);
 
 // User needs to be authenticated to access the routes below
 router.use(checkAuth);
