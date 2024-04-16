@@ -152,7 +152,7 @@ const searchListings = async (req, res, next) => {
 
             console.log("Here are the created docs!");
             // console.log(createdDocs.data);
-            res.json(createdDocs.data);
+            res.json(createdDocs);
         } catch (error) {
             console.error(error);
         }
