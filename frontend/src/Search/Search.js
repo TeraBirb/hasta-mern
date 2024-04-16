@@ -10,8 +10,8 @@ const Search = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [searchInput, setSearchInput] = useState("");
-    const [city, setCity] = useState("San Francisco");
-    const [stateCode, setStateCode] = useState("CA");
+    // const [city, setCity] = useState("San Francisco");
+    // const [stateCode, setStateCode] = useState("CA");
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
     const [minBedrooms, setMinBedrooms] = useState("1");
@@ -30,79 +30,85 @@ const Search = () => {
         setIsLoading(true);
 
         try {
-            // Get city and state from location suggestion
-            const locationSuggestionOptions = {
-                method: "GET",
-                url: "https://us-real-estate.p.rapidapi.com/location/suggest",
-                params: { input: searchInput },
-                headers: {
-                    "X-RapidAPI-Key": process.env.REACT_APP_USA_REAL_ESTATE_API_KEY,
-                    "X-RapidAPI-Host": process.env.REACT_APP_USA_REAL_ESTATE_API_HOST,
-                },
-            };
+            //     // Get city and state from location suggestion
+            //     const locationSuggestionOptions = {
+            //         method: "GET",
+            //         url: "https://us-real-estate.p.rapidapi.com/location/suggest",
+            //         params: { input: searchInput },
+            //         headers: {
+            //             "X-RapidAPI-Key": process.env.REACT_APP_USA_REAL_ESTATE_API_KEY,
+            //             "X-RapidAPI-Host": process.env.REACT_APP_USA_REAL_ESTATE_API_HOST,
+            //         },
+            //     };
 
-            const locationResponse = await axios.request(
-                locationSuggestionOptions
-            );
-            console.log(locationResponse.data);
-            const suggestedCity = locationResponse.data.data[0].city;
-            const suggestedStateCode = locationResponse.data.data[0].state_code;
-            setCity(suggestedCity);
-            setStateCode(suggestedStateCode);
+            //     const locationResponse = await axios.request(
+            //         locationSuggestionOptions
+            //     );
+            //     console.log(locationResponse.data);
+            //     const suggestedCity = locationResponse.data.data[0].city;
+            //     const suggestedStateCode = locationResponse.data.data[0].state_code;
+            //     setCity(suggestedCity);
+            //     setStateCode(suggestedStateCode);
 
-            // Prepare options for the second request with updated city and state
+            //     // Prepare options for the second request with updated city and state
+            //     const selectedPropertyTypes = Object.entries(propertyTypes)
+            //         .filter(([key, value]) => value === true)
+            //         .map(([key]) => key)
+            //         .join(", ");
+
+            //     const options = {
+            //         method: "GET",
+            //         url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
+            //         params: {
+            //             city: suggestedCity,
+            //             state_code: suggestedStateCode,
+            //             limit: "42",
+            //             beds_min: minBedrooms,
+            //             baths_min: minBathrooms,
+            //             price_min: minPrice,
+            //             price_max: maxPrice,
+            //             property_type: selectedPropertyTypes,
+            //             expand_search_radius: "25",
+            //         },
+            //         headers: {
+            //             "X-RapidAPI-Key":
+            //                 process.env.REACT_APP_USA_REAL_ESTATE_API_KEY,
+            //             "X-RapidAPI-Host": process.env.REACT_APP_USA_REAL_ESTATE_API_HOST
+            //         },
+            //     };
+
+            //     // Make the second request
+            //     const response = await axios.request(options);
+            //     const results = response.data.data.home_search.results;
+            //     console.log(results);
+
+            //     // Extract data and save to database
+            //     const extractedData = results.map((result) => ({
+            //         photos: result.photos,
+            //         location: result.location,
+            //         price:
+            //             result.list_price ||
+            //             result.list_price_min ||
+            //             result.list_price_max,
+            //         contact: result.href,
+            //         description: result.description,
+            //         tags: result.tags,
+            //     }));
+
+            //     console.log("Extracted data and saving all to database!");
+            //     const createdDocs = await axios.post(
+            //         process.env.REACT_APP_BACKEND_URL + "/listing/saveAll",
+            //         extractedData
+            //     );
+            //     console.log("Here are the created docs!");
+            //     console.log(createdDocs.data);
             const selectedPropertyTypes = Object.entries(propertyTypes)
                 .filter(([key, value]) => value === true)
                 .map(([key]) => key)
                 .join(", ");
-
-            const options = {
-                method: "GET",
-                url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
-                params: {
-                    city: suggestedCity,
-                    state_code: suggestedStateCode,
-                    limit: "42",
-                    beds_min: minBedrooms,
-                    baths_min: minBathrooms,
-                    price_min: minPrice,
-                    price_max: maxPrice,
-                    property_type: selectedPropertyTypes,
-                    expand_search_radius: "25",
-                },
-                headers: {
-                    "X-RapidAPI-Key":
-                        process.env.REACT_APP_USA_REAL_ESTATE_API_KEY,
-                    "X-RapidAPI-Host": process.env.REACT_APP_USA_REAL_ESTATE_API_HOST
-                },
-            };
-
-            // Make the second request
-            const response = await axios.request(options);
-            const results = response.data.data.home_search.results;
-            console.log(results);
-
-            // Extract data and save to database
-            const extractedData = results.map((result) => ({
-                photos: result.photos,
-                location: result.location,
-                price:
-                    result.list_price ||
-                    result.list_price_min ||
-                    result.list_price_max,
-                contact: result.href,
-                description: result.description,
-                tags: result.tags,
-            }));
-
-            console.log("Extracted data and saving all to database!");
-            const createdDocs = await axios.post(
-                process.env.REACT_APP_BACKEND_URL + "/listing/saveAll",
-                extractedData
-            );
-            console.log("Here are the created docs!");
-            console.log(createdDocs.data);
             
+            
+
             // Redirect to results page
             navigate("/results", { state: { data: createdDocs.data } });
             window.scrollTo(0, 0);
@@ -129,7 +135,9 @@ const Search = () => {
                     placeholder="Enter an address, city, or ZIP code"
                     onInput={(e) => setSearchInput(e.target.value)}
                 />
-                <button onClick={handleSearch}>{isLoading ? "SEARCHING..." : "SEARCH"}</button>
+                <button onClick={handleSearch}>
+                    {isLoading ? "SEARCHING..." : "SEARCH"}
+                </button>
             </div>
 
             <div className="filters">

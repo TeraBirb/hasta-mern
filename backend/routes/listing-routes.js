@@ -18,9 +18,6 @@ router.get("/:lid", listingController.getListingById);
 // for search results, third-party API calls
 // router.post("/search", listingController.saveResultstoDB);
 
-// the big save
-router.post("/saveAll", listingController.saveAllListings);
-
 // check if user has listing in favorites
 router.get("/check/:uid/:lid", listingController.getListingsCheck);
 

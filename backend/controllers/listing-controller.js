@@ -1,6 +1,8 @@
+const axios = require("axios");
+
 const Listing = require("../models/listing");
 const User = require("../models/user");
-const RequestCount = require('../models/requestCount');  // for rate limiting
+const RequestCount = require("../models/requestCount"); // for rate limiting
 
 const { ObjectId } = require("mongoose").Types;
 
@@ -33,10 +35,10 @@ const getListingsCheck = async (req, res, next) => {
     let userWithListings;
     try {
         userWithListings = await User.findById(userId).populate("favorites");
-        isListingInFavorites = userWithListings.favorites.some(listing => listing._id.toString() === listingId);
-        
-    }
-    catch (err) {
+        isListingInFavorites = userWithListings.favorites.some(
+            (listing) => listing._id.toString() === listingId
+        );
+    } catch (err) {
         console.log(err);
         return next(new Error("Could not find user."));
     }
@@ -69,34 +71,94 @@ const getListingsByUserId = async (req, res, next) => {
     res.json(userWithListings.favorites);
 };
 
-// POST Request "api/listing/saveAll"
-const saveAllListings = async (req, res, next) => {
-    // accepts an array with multiple objects in its body,
-    // save all of them to the database using insertMany
-    const listings = req.body;
-
-    let insertedListings;
-    try {
-        insertedListings = await Listing.insertMany(listings);
-    } catch (err) {
-        console.log(err);
-        return next(new Error("Could not save listings."));
-    }
-
-    console.log("Results saved to database.");
-    res.json(insertedListings);
-};
-
 // POST Request "api/listing/searchListings/???/"
 const searchListings = async (req, res, next) => {
+    const search = req.body;
+    // let city, stateCode;
     // LIMITED USAGE HERE
     try {
-        
-        // searchListings logic here
-        res.json({ message: 'Mock rate count' });
+        // Get city and state from location suggestion
+        try {
+            const locationSuggestionOptions = {
+                method: "GET",
+                url: "https://us-real-estate.p.rapidapi.com/location/suggest",
+                params: { input: search.input },
+                headers: {
+                    "X-RapidAPI-Key": process.env.USA_REAL_ESTATE_API_KEY,
+                    "X-RapidAPI-Host": process.env.USA_REAL_ESTATE_API_HOST,
+                },
+            };
+
+            const locationResponse = await axios.request(
+                locationSuggestionOptions
+            );
+            console.log(locationResponse.data);
+
+            // INSERT ERROR HANDLING HERE FOR NO RESULTS FOUND
+
+            const suggestedCity = locationResponse.data.data[0].city;
+            const suggestedStateCode = locationResponse.data.data[0].state_code;
+            // city = suggestedCity;
+            // stateCode = suggestedStateCode;
+
+            // Prepare options for the second request with updated city and state
+            // const selectedPropertyTypes = Object.entries(propertyTypes)
+            //     .filter(([key, value]) => value === true)
+            //     .map(([key]) => key)
+            //     .join(", ");
+
+            const options = {
+                method: "GET",
+                url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
+                params: {
+                    city: suggestedCity,
+                    state_code: suggestedStateCode,
+                    limit: "42",
+                    beds_min: search.minBedrooms,
+                    baths_min: search.minBathrooms,
+                    price_min: search.minPrice,
+                    price_max: search.maxPrice,
+                    property_type: search.selectedPropertyTypes,
+                    expand_search_radius: "25",
+                },
+                headers: {
+                    "X-RapidAPI-Key": process.env.USA_REAL_ESTATE_API_KEY,
+                    "X-RapidAPI-Host": process.env.USA_REAL_ESTATE_API_HOST,
+                },
+            };
+
+            // Make the second request
+            const response = await axios.request(options);
+            const results = response.data.data.home_search.results;
+            // console.log(results);
+
+            // Extract data and save to database
+            const extractedData = results.map((result) => ({
+                photos: result.photos,
+                location: result.location,
+                price:
+                    result.list_price ||
+                    result.list_price_min ||
+                    result.list_price_max,
+                contact: result.href,
+                description: result.description,
+                tags: result.tags,
+            }));
+
+            console.log("Extracted data and saving all to database!");
+
+            const createdDocs = await Listing.insertMany(extractedData);
+            console.log("Results saved to database.");
+
+            console.log("Here are the created docs!");
+            // console.log(createdDocs.data);
+            res.json(createdDocs.data);
+        } catch (error) {
+            console.error(error);
+        }
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Internal Server Error, problem incrementing request count' });
+        return next(new Error("Error finding listings for your search."));
     }
 };
 
@@ -104,7 +166,6 @@ const searchListings = async (req, res, next) => {
 // When user clicks on "Add to Favorites"
 // V1
 const saveListing = async (req, res, next) => {
-    
     const { userId, listingId } = req.body;
 
     // const listingObjectId = new ObjectId(listingId);
@@ -137,7 +198,6 @@ const saveListing = async (req, res, next) => {
     res.status(201).json({ identifiedUser, identifiedListing });
 };
 
-
 // DELETE Request "api/listing/:uid/:lid"
 // When user clicks on "Remove from Favorites"
 const deleteListingFromFavorites = async (req, res, next) => {
@@ -152,7 +212,7 @@ const deleteListingFromFavorites = async (req, res, next) => {
         if (!identifiedUser) {
             throw new Error("User not found.");
         }
-        
+
         // Remove the listingId from the favorites array
         identifiedUser.favorites.pull(listingId);
 
@@ -169,7 +229,6 @@ const deleteListingFromFavorites = async (req, res, next) => {
 exports.getListingById = getListingById;
 exports.getListingsCheck = getListingsCheck;
 exports.getListingsByUserId = getListingsByUserId;
-exports.saveAllListings = saveAllListings;
 exports.searchListings = searchListings;
 exports.saveListing = saveListing;
 exports.deleteListingFromFavorites = deleteListingFromFavorites;
@@ -189,7 +248,8 @@ exports.devAddFake = async (req, res, next) => {
         beds: beds || 3,
         baths: baths || 2,
         sqft: sqft || 2000,
-        contact: "https://www.zillow.com/apartments/sunnyvale-ca/ironworks/9VG7n7/",
+        contact:
+            "https://www.zillow.com/apartments/sunnyvale-ca/ironworks/9VG7n7/",
     });
 
     try {

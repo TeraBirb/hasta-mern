@@ -10,7 +10,7 @@ const listingSchema = new Schema({
     price: {type: Number},
     contact: {type: String},
     tags: {type: Array},
-    description: {type: Object, required: true},
+    description: {type: Object},
 });
 
 listingSchema.plugin(uniqueValidator);
