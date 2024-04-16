@@ -1,5 +1,7 @@
 const Listing = require("../models/listing");
 const User = require("../models/user");
+const RequestCount = require('../models/requestCount');  // for rate limiting
+
 const { ObjectId } = require("mongoose").Types;
 
 // GET Request "api/listing/:lid"
@@ -88,6 +90,14 @@ const saveAllListings = async (req, res, next) => {
 // POST Request "api/listing/searchListings/???/"
 const searchListings = async (req, res, next) => {
     // LIMITED USAGE HERE
+    try {
+        
+        // searchListings logic here
+        res.json({ message: 'Mock rate count' });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Internal Server Error, problem incrementing request count' });
+    }
 };
 
 // PATCH Request "api/listing/save"
