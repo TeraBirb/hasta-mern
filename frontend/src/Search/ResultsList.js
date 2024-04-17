@@ -80,8 +80,8 @@ const ResultsList = () => {
             </ul>
             {/* Report Table */}
             <div className="reportTableWrapper">
-                <h2>Rental Prices Report</h2>
-                <p>Report generated on: {currentDateTime}</p>
+                {/* <h2>Rental Prices Report</h2>
+                <p>Report generated on: {currentDateTime}</p> */}
                 <table className="reportTable">
                     <thead>
                         <tr>
@@ -102,6 +102,7 @@ const ResultsList = () => {
                         ))}
                     </tbody>
                 </table>
+                <p>We currently display a maximum of 42 results. Consider narrowing down your search filters for better relevance.</p>
             </div>
         </div>
     );
