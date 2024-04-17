@@ -77,85 +77,69 @@ const searchListings = async (req, res, next) => {
     // let city, stateCode;
     // LIMITED USAGE HERE
     try {
-        // Get city and state from location suggestion
-        try {
-            const locationSuggestionOptions = {
-                method: "GET",
-                url: "https://us-real-estate.p.rapidapi.com/location/suggest",
-                params: { input: search.input },
-                headers: {
-                    "X-RapidAPI-Key": process.env.USA_REAL_ESTATE_API_KEY,
-                    "X-RapidAPI-Host": process.env.USA_REAL_ESTATE_API_HOST,
-                },
-            };
+        // Geocoding
+        const geocodingResponse = await axios.get(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+                search.searchInput
+            )}&key=${process.env.GOOGLE_API_KEY}`
+        );
 
-            const locationResponse = await axios.request(
-                locationSuggestionOptions
-            );
-            console.log(locationResponse.data);
-
-            // INSERT ERROR HANDLING HERE FOR NO RESULTS FOUND
-
-            const suggestedCity = locationResponse.data.data[0].city;
-            const suggestedStateCode = locationResponse.data.data[0].state_code;
-            // city = suggestedCity;
-            // stateCode = suggestedStateCode;
-
-            // Prepare options for the second request with updated city and state
-            // const selectedPropertyTypes = Object.entries(propertyTypes)
-            //     .filter(([key, value]) => value === true)
-            //     .map(([key]) => key)
-            //     .join(", ");
-
-            const options = {
-                method: "GET",
-                url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
-                params: {
-                    city: suggestedCity,
-                    state_code: suggestedStateCode,
-                    limit: "42",
-                    beds_min: search.minBedrooms,
-                    baths_min: search.minBathrooms,
-                    price_min: search.minPrice,
-                    price_max: search.maxPrice,
-                    property_type: search.selectedPropertyTypes,
-                    expand_search_radius: "25",
-                },
-                headers: {
-                    "X-RapidAPI-Key": process.env.USA_REAL_ESTATE_API_KEY,
-                    "X-RapidAPI-Host": process.env.USA_REAL_ESTATE_API_HOST,
-                },
-            };
-
-            // Make the second request
-            const response = await axios.request(options);
-            const results = response.data.data.home_search.results;
-            // console.log(results);
-
-            // Extract data and save to database
-            const extractedData = results.map((result) => ({
-                photos: result.photos,
-                location: result.location,
-                price:
-                    result.list_price ||
-                    result.list_price_min ||
-                    result.list_price_max,
-                contact: result.href,
-                description: result.description,
-                tags: result.tags,
-            }));
-
-            console.log("Extracted data and saving all to database!");
-
-            const createdDocs = await Listing.insertMany(extractedData);
-            console.log("Results saved to database.");
-
-            console.log("Here are the created docs!");
-            // console.log(createdDocs.data);
-            res.json(createdDocs);
-        } catch (error) {
-            console.error(error);
+        // INSERT ERROR HANDLING HERE FOR NO RESULTS FOUND
+        if (geocodingResponse.data.status === "ZERO_RESULTS") {
+            return next(new Error("No results found for your search."));
         }
+
+        const suggestedCity =
+            geocodingResponse.data.results[0].address_components[0].long_name;
+        const suggestedStateCode =
+            geocodingResponse.data.results[0].address_components[2].short_name;
+
+        const options = {
+            method: "GET",
+            url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
+            params: {
+                city: suggestedCity,
+                state_code: suggestedStateCode,
+                limit: "42",
+                beds_min: search.minBedrooms,
+                baths_min: search.minBathrooms,
+                price_min: search.minPrice,
+                price_max: search.maxPrice,
+                property_type: search.selectedPropertyTypes,
+                expand_search_radius: "25",
+            },
+            headers: {
+                "X-RapidAPI-Key": process.env.USA_REAL_ESTATE_API_KEY,
+                "X-RapidAPI-Host": process.env.USA_REAL_ESTATE_API_HOST,
+            },
+        };
+
+        // Make the second request
+        const response = await axios.request(options);
+        const results = response.data.data.home_search.results;
+        // console.log(results);
+
+        // Extract data and save to database
+        const extractedData = results.map((result) => ({
+            photos: result.photos,
+            location: result.location,
+            price:
+                result.list_price ||
+                result.list_price_min ||
+                result.list_price_max,
+            contact: result.href,
+            description: result.description,
+            tags: result.tags,
+        }));
+
+        console.log("Extracted data and saving all to database!");
+
+        const createdDocs = await Listing.insertMany(extractedData);
+        console.log("Results saved to database.");
+
+        console.log("Here are the created docs!");
+        // console.log(createdDocs.data);
+        res.json(createdDocs);
     } catch (err) {
         console.error(err);
         return next(new Error("Error finding listings for your search."));
