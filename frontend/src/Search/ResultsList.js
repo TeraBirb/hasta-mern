@@ -1,20 +1,29 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import Result from "./Result";
+import NavigateBack from "../UIElements/NavigateBack";
 import "./ResultsList.css";
 
 const ResultsList = () => {
     const location = useLocation();
     const data = location.state.data;
-    const [currentPage, setCurrentPage] = useState(1);
+
+    // Current page is stored in session storage
+    const currentPageStorageKey = "currentPage";
+    const [currentPage, setCurrentPage] = useState(
+        parseInt(sessionStorage.getItem(currentPageStorageKey)) || 1
+    );
 
     // Pagination logic
     const itemsPerPage = 6;
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
+    useEffect(() => {
+        sessionStorage.setItem(currentPageStorageKey, currentPage);
+    }, [currentPage]);
+
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
-        window.scrollTo(0, 0);
     };
 
     // Calculate median, mean, and maximum prices for each property type
@@ -25,7 +34,9 @@ const ResultsList = () => {
     const calculateMedian = (arr) => {
         const sortedArr = [...arr].sort((a, b) => a - b);
         const mid = Math.floor(sortedArr.length / 2);
-        return sortedArr.length % 2 !== 0 ? sortedArr[mid] : (sortedArr[mid - 1] + sortedArr[mid]) / 2;
+        return sortedArr.length % 2 !== 0
+            ? sortedArr[mid]
+            : (sortedArr[mid - 1] + sortedArr[mid]) / 2;
     };
 
     // Function to calculate mean
@@ -35,7 +46,9 @@ const ResultsList = () => {
     };
 
     propertyTypes.forEach((type) => {
-        const filteredData = data.filter((result) => result.description.type === type);
+        const filteredData = data.filter(
+            (result) => result.description.type === type
+        );
         const prices = filteredData.map((result) => result.price);
         const medianPrice = calculateMedian(prices);
         const meanPrice = calculateMean(prices);
@@ -43,32 +56,41 @@ const ResultsList = () => {
         pricesByType[type] = {
             medianPrice: medianPrice ? "$" + Math.round(medianPrice) : null,
             meanPrice: meanPrice ? "$" + Math.round(meanPrice) : null,
-            maxPrice: maxPrice !== -Infinity ? "$" + Math.round(maxPrice) : null
+            maxPrice:
+                maxPrice !== -Infinity ? "$" + Math.round(maxPrice) : null,
         };
     });
 
     // Get current date-time stamp
-    const currentDateTime = new Date().toLocaleString();
+    // const currentDateTime = new Date().toLocaleString();
 
     return (
         <div className="resultsListWrapper">
             <ul className="resultsList">
-                {data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((result) => (
-                    <Result
-                        key={result.id}
-                        id={result.id}
-                        type={result.description.type}
-                        description={result.description}
-                        contact={result.contact}
-                        photos={result.photos}
-                        price={result.price}
-                        location={result.location}
-                        tags={result.tags}
-                    />
-                ))}
+                {data
+                    .slice(
+                        (currentPage - 1) * itemsPerPage,
+                        currentPage * itemsPerPage
+                    )
+                    .map((result) => (
+                        <Result
+                            key={result.id}
+                            id={result.id}
+                            type={result.description.type}
+                            description={result.description}
+                            contact={result.contact}
+                            photos={result.photos}
+                            price={result.price}
+                            location={result.location}
+                            tags={result.tags}
+                        />
+                    ))}
             </ul>
             <ul className="pagination">
-                {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+                {Array.from(
+                    { length: totalPages },
+                    (_, index) => index + 1
+                ).map((pageNumber) => (
                     <li
                         key={pageNumber}
                         className={pageNumber === currentPage ? "active" : ""}
@@ -102,7 +124,10 @@ const ResultsList = () => {
                         ))}
                     </tbody>
                 </table>
-                <p>We currently display a maximum of 42 results. Consider narrowing down your search filters for better relevance.</p>
+                <p>
+                    We currently display a maximum of 42 results. Consider
+                    narrowing down your search filters for better relevance.
+                </p>
             </div>
         </div>
     );
