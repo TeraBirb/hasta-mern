@@ -1,0 +1,15 @@
+.favorites {
+    background-color: #47a297;
+    width: 50vw;
+    margin: 0 auto;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px){
+    .favorites {
+        width: 90vw;
+    }    
+}

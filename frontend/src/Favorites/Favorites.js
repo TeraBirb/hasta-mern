@@ -4,6 +4,8 @@ import axios from "axios";
 
 import { AuthContext } from "../Context/auth-context";
 
+import "./Favorites.css";
+
 const Favorites = () => {
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
@@ -34,8 +36,15 @@ const Favorites = () => {
     }, []);
 
     return (
-        <div>
-            <h2 style={{ textAlign: "center" }}>Sign up or log in to start saving listings!</h2>
+        <div className="favorites">
+            {auth.isLoggedIn ? (
+                <h2>
+                    Looks like you haven't saved a listing yet. This is where
+                    your saved listings go.
+                </h2>
+            ) : (
+                <h2>Please log in or sign up to start saving listings to your favorites.</h2>
+            )}
         </div>
     );
 };
