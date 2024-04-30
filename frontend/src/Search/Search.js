@@ -2,7 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import LoadingSpinner from "../UIElements/LoadingSpinner";
+
 import "./Search.css";
+
+const SEARCH_SVG = (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+    >
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+        />
+    </svg>
+);
 
 const Search = () => {
     const navigate = useNavigate();
@@ -29,9 +48,10 @@ const Search = () => {
         // on load, clear listings that are not saved by any user
         const clearListings = async () => {
             try {
-                await axios.delete(process.env.REACT_APP_BACKEND_URL + "/listing/clear");
-            }
-            catch (error) {
+                await axios.delete(
+                    process.env.REACT_APP_BACKEND_URL + "/listing/clear"
+                );
+            } catch (error) {
                 console.error(error);
             }
         };
@@ -48,15 +68,17 @@ const Search = () => {
                 .map(([key]) => key)
                 .join(", ");
 
-            const response = await axios.post(process.env.REACT_APP_BACKEND_URL + "/listing", 
-            {
-                searchInput,
-                minPrice,
-                maxPrice,
-                minBedrooms,
-                minBathrooms,
-                selectedPropertyTypes
-            });
+            const response = await axios.post(
+                process.env.REACT_APP_BACKEND_URL + "/listing",
+                {
+                    searchInput,
+                    minPrice,
+                    maxPrice,
+                    minBedrooms,
+                    minBathrooms,
+                    selectedPropertyTypes,
+                }
+            );
 
             console.log(response);
 
@@ -86,8 +108,8 @@ const Search = () => {
                     placeholder="Enter an address, city, or ZIP code"
                     onInput={(e) => setSearchInput(e.target.value)}
                 />
-                <button onClick={handleSearch}>
-                    {isLoading ? "SEARCHING..." : "SEARCH"}
+                <button onClick={handleSearch} disabled={isLoading}>
+                    {isLoading ? <LoadingSpinner /> : "SEARCH"}
                 </button>
             </div>
 
