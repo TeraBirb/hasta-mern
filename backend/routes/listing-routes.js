@@ -25,6 +25,9 @@ router.get("/check/:uid/:lid", listingController.getListingsCheck);
 // for Favorites page
 router.get("/user/:uid", listingController.getListingsByUserId);
 
+// clear listings that are not saved by any user
+router.delete("/clear", listingController.clearListings);
+
 // Dev only tool, to save listings to database
 router.post("/dev", listingController.devAddFake);
 

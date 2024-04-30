@@ -71,6 +71,24 @@ const getListingsByUserId = async (req, res, next) => {
     res.json(userWithListings.favorites);
 };
 
+const clearListings = async (req, res, next) => {
+    try {
+      // Find user IDs with associated listings
+      const usersWithListings = await User.find({ favorites: { $exists: true, $not: { $size: 0 } } });
+  
+      // Extract listing IDs associated with users
+      const listingIds = usersWithListings.flatMap(user => user.favorites);
+  
+      // Remove all documents from the Listing collection except those associated with users
+      await Listing.deleteMany({ _id: { $nin: listingIds } });
+      
+      res.json({ message: 'Listings cleared successfully' });
+    } catch (error) {
+      console.error(error);
+      return next(new Error('Error clearing listings'));
+    }
+  };
+
 // POST Request "api/listing/searchListings/???/"
 const searchListings = async (req, res, next) => {
     const search = req.body;
@@ -154,7 +172,7 @@ const saveListing = async (req, res, next) => {
     const { userId, listingId } = req.body;
 
     // const listingObjectId = new ObjectId(listingId);
-    console.log(userId, " ||| ", listingId);
+    // console.log(userId, " ||| ", listingId);
 
     let identifiedUser, identifiedListing;
     try {
@@ -170,7 +188,7 @@ const saveListing = async (req, res, next) => {
     }
 
     try {
-        console.log(identifiedUser);
+        // console.log(identifiedUser);
         // identifiedUser.favorites.push(listingId);
         // identifiedUser.favorites.push(identifiedListing._id);
         identifiedUser.favorites.push(identifiedListing);
@@ -216,6 +234,7 @@ exports.getListingsCheck = getListingsCheck;
 exports.getListingsByUserId = getListingsByUserId;
 exports.searchListings = searchListings;
 exports.saveListing = saveListing;
+exports.clearListings = clearListings;
 exports.deleteListingFromFavorites = deleteListingFromFavorites;
 
 // export dev tool
