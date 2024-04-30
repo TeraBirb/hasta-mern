@@ -134,10 +134,11 @@ const searchListings = async (req, res, next) => {
 
         console.log("Extracted data and saving all to database!");
 
-        const createdDocs = await Listing.insertMany(extractedData);
+        // Save to database while ignoring duplicates
+        const createdDocs = await Listing.insertMany(extractedData, { ordered: false });
         console.log("Results saved to database.");
 
-        console.log("Here are the created docs!");
+        // console.log("Here are the created docs!");
         // console.log(createdDocs.data);
         res.json(createdDocs);
     } catch (err) {
