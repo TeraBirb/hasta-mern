@@ -32,7 +32,9 @@ const Favorites = () => {
             }
         };
 
-        fetchFavorites();
+        if (auth.isLoggedIn) {
+            fetchFavorites();
+        }
     }, []);
 
     return (
@@ -43,7 +45,10 @@ const Favorites = () => {
                     your saved listings go.
                 </h2>
             ) : (
-                <h2>Please log in or sign up to start saving listings to your favorites.</h2>
+                <h2>
+                    Please log in or sign up to start saving listings to your
+                    favorites.
+                </h2>
             )}
         </div>
     );
