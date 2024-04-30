@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -24,6 +24,19 @@ const Search = () => {
         apartment: false,
         single_family: false,
     });
+
+    useEffect(() => {
+        // on load, clear listings that are not saved by any user
+        const clearListings = async () => {
+            try {
+                await axios.delete(process.env.REACT_APP_BACKEND_URL + "/listing/clear");
+            }
+            catch (error) {
+                console.error(error);
+            }
+        };
+        clearListings();
+    }, []);
 
     const handleSearch = async () => {
         console.log("Searching...");

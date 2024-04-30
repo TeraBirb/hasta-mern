@@ -82,6 +82,7 @@ const clearListings = async (req, res, next) => {
       // Remove all documents from the Listing collection except those associated with users
       await Listing.deleteMany({ _id: { $nin: listingIds } });
       
+      console.log('Listings cleared successfully');
       res.json({ message: 'Listings cleared successfully' });
     } catch (error) {
       console.error(error);
