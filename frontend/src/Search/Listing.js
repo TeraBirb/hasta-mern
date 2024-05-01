@@ -134,7 +134,7 @@ const Listing = () => {
                         alt={listing.title}
                         onClick={handleFavorite}
                     />
-                    <h2>{listing.title}</h2>
+                    {/* <h2>{listing.title}</h2> */}
                     <h3>{`\$${listing.price || NO_INFO}`}</h3>
                     <h4>{streetAddress || NO_INFO}</h4>
                     <h4>{cityState || NO_INFO}</h4>

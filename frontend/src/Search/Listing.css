@@ -48,9 +48,9 @@
 
 .favorite {
     max-width: 4rem;
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
+    /* position: absolute; */
+    /* right: 1rem;
+    top: 1rem; */
 }
 
 .favorite:hover {
@@ -135,9 +135,9 @@
 
     .favorite {
         max-width: 3rem;
-        position: absolute;
-        right: 0;
-        top: 1rem;
+        /* position: absolute; */
+        /* right: 0; */
+        /* top: 1rem; */
     }
 
     .listingDetails {
