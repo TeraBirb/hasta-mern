@@ -4,6 +4,7 @@ import axios from "axios";
 
 import NavigateBack from "../UIElements/NavigateBack";
 import Map from "../UIElements/Map";
+import Toast from "../UIElements/Toast";
 import { AuthContext } from "../Context/auth-context";
 
 import "./Listing.css";
@@ -111,6 +112,7 @@ const Listing = () => {
 
     return (
         <React.Fragment>
+            {!auth.isLoggedIn && <Toast message="Sign up or log in to save this listing!" />}
             <div className="listing">
                 <NavigateBack />
                 <div className="listingImageWrapper">
