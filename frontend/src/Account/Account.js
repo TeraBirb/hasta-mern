@@ -85,6 +85,12 @@ const Account = () => {
         }
     };
 
+    const logoutHandler = event => {
+        event.preventDefault();
+        auth.logout();
+        navigate("/");
+    };
+
     return (
         <div className="account">
             <h1>Account settings</h1>
@@ -92,7 +98,7 @@ const Account = () => {
                 <button disabled title="Coming soon!">
                     NIGHT MODE
                 </button>
-                <button onClick={auth.logout}>LOGOUT</button>
+                <button onClick={logoutHandler}>LOGOUT</button>
                 <hr />
                 <h3>Reset Username or Password</h3>
                 {isInvalidCredentials && (
