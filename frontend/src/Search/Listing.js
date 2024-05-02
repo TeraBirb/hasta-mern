@@ -132,7 +132,6 @@ const Listing = () => {
                         alt={listing.title}
                         onClick={handleFavorite}
                     />
-                    <button onClick = {() => {console.log(isFavorite)}}>Click me</button>
                     {/* <h2>{listing.title}</h2> */}
                     <h3>{`\$${listing.price || NO_INFO}`}</h3>
                     <h4>{streetAddress || NO_INFO}</h4>
