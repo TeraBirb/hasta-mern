@@ -34,7 +34,6 @@ const Listing = () => {
                 // fetch user's favorites
                 // check if this listing is in user's favorites
                 // setIsFavorite(true);
-                console.log("checking favorites using useEffect");
                 try {
                     const response = await axios.get(
                         process.env.REACT_APP_BACKEND_URL +
@@ -48,18 +47,17 @@ const Listing = () => {
                             },
                         }
                     );
-                    console.log(response.data);
-                    if (response.data.isListingInFavorites === true) {
-                        setIsFavorite(true);
-                    }
+                    // console.log(response.data);
+                    setIsFavorite(response.data.isListingInFavorites === true);
                 } catch (err) {
                     console.log(err);
                 }
             }
-            // console.log("isFavorite: ", isFavorite);
         };
         checkFavorite();
-    }, []);
+        
+        // ensures isFavorite is updated on reload. Auth loads after component and useEffect runs, resulting in isFavorite being false
+    }, [auth.isLoggedIn]); 
 
     const handleFavorite = async () => {
         if (!auth.isLoggedIn) {
@@ -134,6 +132,7 @@ const Listing = () => {
                         alt={listing.title}
                         onClick={handleFavorite}
                     />
+                    <button onClick = {() => {console.log(isFavorite)}}>Click me</button>
                     {/* <h2>{listing.title}</h2> */}
                     <h3>{`\$${listing.price || NO_INFO}`}</h3>
                     <h4>{streetAddress || NO_INFO}</h4>
