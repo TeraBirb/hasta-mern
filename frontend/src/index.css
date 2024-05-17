@@ -4,6 +4,7 @@
 * {
   box-sizing: border-box;
   font-family: 'Quicksand', sans-serif;
+  color: #F2E8CF;
 }
 
 /* html {
@@ -12,7 +13,8 @@
 
 body {
   margin: 0;
-  background: rgb(184, 206, 203);
+  /* background: rgb(184, 206, 203); */
+  /* background: #EBD2CC; */
 }
 
 input {
@@ -22,6 +24,18 @@ input {
 
 input:focus {
   outline: none;
+}
+
+.bg-1, body {
+  background: #001219;
+}
+
+.bg-2 {
+  background: #005F73;
+}
+
+.hl-1 {
+  background: #EE9B00;
 }
 
 .slide-in-left-enter {

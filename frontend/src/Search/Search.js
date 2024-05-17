@@ -100,7 +100,7 @@ const Search = () => {
     };
 
     return (
-        <div className="search">
+        <div className="search bg-2">
             <h3>Browse homes and apartments for rent</h3>
             <div className="search__main">
                 <input
@@ -108,7 +108,7 @@ const Search = () => {
                     placeholder="Enter an address, city, or ZIP code"
                     onInput={(e) => setSearchInput(e.target.value)}
                 />
-                <button onClick={handleSearch} disabled={isLoading}>
+                <button className="hl-1" onClick={handleSearch} disabled={isLoading}>
                     {isLoading ? <LoadingSpinner /> : "SEARCH"}
                 </button>
             </div>

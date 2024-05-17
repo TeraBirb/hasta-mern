@@ -1,11 +1,12 @@
 .search__header {
-    color: white;
+    /* color: white; */
     text-align: center;
 }
 
 .search {
-    color: white;
-    background-color: rgb(71, 162, 151);
+    /* color: white; */
+    /* background-color: rgb(71, 162, 151); */
+    /* background-color: #799654; */
     width: 50vw;
     margin: 7rem auto;
     text-align: center;
@@ -31,7 +32,7 @@
 
 .search__main button {
     height: 3rem;
-    background-color: #f5ff64;
+    /* background-color: #f5ff64; */
     border: none;
     border-radius: 15px;
     margin-left: 10px;
@@ -43,6 +44,7 @@
 }
 
 .search input, .search select{
+    color: #292929;
     border: none;
     border-radius: 15px;
 }

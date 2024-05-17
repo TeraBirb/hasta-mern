@@ -37,7 +37,7 @@ class MainNavigation extends Component {
                     <Backdrop onClick={this.closeDrawerHandler} />
                 )}
 
-                <header className="main-header">
+                <header className="main-header bg-2">
                     <button
                         className="main-navigation__menu-btn"
                         onClick={this.openDrawerHandler}
