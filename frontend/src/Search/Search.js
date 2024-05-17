@@ -118,7 +118,6 @@ const Search = () => {
                     <label htmlFor="">Minimum price:</label>
                     <input
                         type="text"
-                        placeholder="$"
                         onInput={(e) => setMinPrice(e.target.value)}
                     />
                 </div>
@@ -126,7 +125,6 @@ const Search = () => {
                     <label htmlFor="">Maximum price:</label>
                     <input
                         type="text"
-                        placeholder="$"
                         onInput={(e) => setMaxPrice(e.target.value)}
                     />
                 </div>

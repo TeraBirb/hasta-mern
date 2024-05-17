@@ -45,7 +45,6 @@
 .search input, .search select{
     border: none;
     border-radius: 15px;
-    color: #292929;
 }
 
 .filters .filter-item {
@@ -69,7 +68,7 @@
 
     .search__main input {
         width: 80%;
-        font-size: 1rem;
+        font-size: 0.8rem;
     }
 
     .search__main button {
