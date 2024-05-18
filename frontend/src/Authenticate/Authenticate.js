@@ -103,7 +103,7 @@ const Authenticate = () => {
     };
 
     return (
-        <div className="authenticate">
+        <div className="authenticate bg-2">
             <form>
                 <div className="form-control">
                     {isInvalidCredentials && (
@@ -127,12 +127,17 @@ const Authenticate = () => {
                 <div className="form-actions">
                     {isLoginMode ? (
                         <React.Fragment>
-                            <button type="button" onClick={loginHandler}>
+                            <button
+                                className="hl-1"
+                                type="button"
+                                onClick={loginHandler}
+                            >
                                 LOGIN
                             </button>
 
                             <button
                                 type="button"
+                                className="hl-1"
                                 onClick={() =>
                                     setIsLoginMode((prevMode) => !prevMode)
                                 }
@@ -200,11 +205,16 @@ const Authenticate = () => {
                                     )}
                                 </p>
                             </div>
-                            <button type="button" onClick={signupHandler}>
+                            <button
+                                className="hl-1"
+                                type="button"
+                                onClick={signupHandler}
+                            >
                                 SIGNUP
                             </button>
 
                             <button
+                                className="hl-1"
                                 type="button"
                                 onClick={() =>
                                     setIsLoginMode((prevMode) => !prevMode)

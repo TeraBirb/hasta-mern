@@ -92,13 +92,13 @@ const Account = () => {
     };
 
     return (
-        <div className="account">
+        <div className="account bg-2">
             <h1>Account settings</h1>
             <form>
                 <button disabled title="Coming soon!">
                     NIGHT MODE
                 </button>
-                <button onClick={logoutHandler}>LOGOUT</button>
+                <button className="hl-1"  onClick={logoutHandler}>LOGOUT</button>
                 <hr />
                 <h3>Reset Username or Password</h3>
                 {isInvalidCredentials && (
@@ -151,7 +151,7 @@ const Account = () => {
                     </div>
                 )}
                 <div className="form-actions">
-                    <button type="button" onClick={resetHandler}>
+                    <button className="hl-1" type="button" onClick={resetHandler}>
                         RESET
                     </button>
                 </div>

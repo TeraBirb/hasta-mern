@@ -1,6 +1,4 @@
 .account {
-    color: white;
-    background-color: #47A297;
     text-align: center;
     width: 60vw;
     max-width: 500px;
@@ -31,16 +29,26 @@
     padding: 0.5rem;
     width: 40%;
     font-size: 1.2rem;
-    background-color: #f5ff64;
     /* color: green; */
     border: none;
     border-radius: 5px;
     cursor: pointer;
-
-    
 }
 
 .account button:disabled {
     opacity: 0.5;
     cursor: default;
+}
+
+@media screen and (max-width: 768px){
+    .account {
+        /* Add a line break after each element */
+        width: 90vw;
+
+    }
+    .account form button {
+        margin: 1rem auto;
+        width: 80%;
+    }
+    
 }
