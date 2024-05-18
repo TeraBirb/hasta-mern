@@ -38,7 +38,7 @@ const Favorites = () => {
     }, []);
 
     return (
-        <div className="favorites">
+        <div className="favorites bg-2">
             {auth.isLoggedIn ? (
                 <h2>
                     Looks like you haven't saved a listing yet. This is where
