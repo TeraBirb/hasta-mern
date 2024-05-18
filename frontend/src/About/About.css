@@ -5,9 +5,12 @@
     /* color: black; */
     margin: 0.5rem auto;
     width: 50vw;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
 }
 
-.about h2,
-.about p {
-    text-align: center;
+.about h2 {
+    font-size: 2rem;
+    margin-top: 10px;
 }

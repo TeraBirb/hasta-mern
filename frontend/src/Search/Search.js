@@ -101,7 +101,7 @@ const Search = () => {
 
     return (
         <div className="search bg-2">
-            <h3>Browse homes and apartments for rent</h3>
+            <h1>Browse homes and apartments for rent</h1>
             <div className="search__main">
                 <input
                     type="text"

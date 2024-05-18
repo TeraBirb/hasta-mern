@@ -2,26 +2,20 @@ import "./About.css";
 
 const About = () => {
     return (
-        <div className="about">
+        <div className="about bg-2">
             <h2>What is HASTA?</h2>
             <p>
-                Prospective home or apartment renters face the challenge of
-                navigating multiple rental listing platforms during their
-                search. This inefficient and fragmented process is
-                time-consuming, often leading to missed opportunities and
-                frustration. The amount of scattered information across
-                disjointed platforms can also be overwhelming.
+                Searching for a new home or apartment can be a hassle, with so
+                many rental sites to check and compare. It's easy to feel
+                overwhelmed and miss out on great opportunities.
             </p>
             <p>
-                The proposed software product, Home/Apartment Rental Site
-                Aggregator (Hasta), aims to address this business problem by
-                aggregating listings from commonly used rental listing platforms
-                into a central platform where users can manage, search, and save
-                listings all within a user-friendly interface. This will
-                eliminate the need to manually comb through several listing
-                platforms, enhancing user experience by streamlining the rental
-                search process. Hasta saves users valuable time and effort,
-                allowing them to focus on finding their ideal home.
+                That's where Hasta comes in. Hasta is a smart tool that gathers
+                listings from all the popular rental sites into one easy-to-use
+                platform. With Hasta, you can search, save, and manage all your
+                rental options in one place, saving you time and effort. Say
+                goodbye to endless scrolling and hello to finding your perfect
+                home faster and with less stress.
             </p>
         </div>
     );
