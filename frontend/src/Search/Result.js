@@ -23,7 +23,7 @@ const Result = (props) => {
 
     return (
         <div className="results">
-            <div className="resultBox" onClick={handleClick}>
+            <div className="resultBox bg-2" onClick={handleClick}>
                 <img src="" alt="" />
                 <div className="resultInfo">
                     <img src={props.photos[0].href} alt="Listing" />
