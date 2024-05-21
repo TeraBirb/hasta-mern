@@ -57,7 +57,7 @@ const Listing = () => {
         checkFavorite();
         
         // ensures isFavorite is updated on reload. Auth loads after component and useEffect runs, resulting in isFavorite being false
-    }, [auth.isLoggedIn]); 
+    }, [auth.isLoggedIn, auth.userId, auth.token, listing.id]); 
 
     const handleFavorite = async () => {
         if (!auth.isLoggedIn) {
@@ -133,7 +133,7 @@ const Listing = () => {
                         onClick={handleFavorite}
                     />
                     {/* <h2>{listing.title}</h2> */}
-                    <h3>{`\$${listing.price || NO_INFO}`}</h3>
+                    <h3>{`$${listing.price || NO_INFO}`}</h3>
                     <h4>{streetAddress || NO_INFO}</h4>
                     <h4>{cityState || NO_INFO}</h4>
                     <h4>

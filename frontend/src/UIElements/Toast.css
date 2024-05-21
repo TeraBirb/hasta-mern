@@ -4,7 +4,7 @@
     right: 20px; */
     width: 30%;
     margin: 0 auto;
-    background-color: #47A297;
+    /* background-color: #47A297; */
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
@@ -17,8 +17,8 @@
   }
   
   .toast__close {
-    background: #F5FF64;
-    border-radius: 50%;
+    /* background: #F5FF64; */
+    border-radius: 5px;
     border-color: transparent;
     color: black;
     cursor: pointer;

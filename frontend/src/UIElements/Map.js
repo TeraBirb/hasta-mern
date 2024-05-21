@@ -1,14 +1,13 @@
-import { useRef, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 import "./Map.css";
 
 const Map = (props) => {
-    const mapRef = useRef();
+    // const mapRef = useRef();
 
     const { center, zoom } = props;
 
-    // No longer necessary due to LoadScript
+    // // v1, No longer necessary due to LoadScript
     // useEffect(() => {
     //   const map = new window.google.maps.Map(mapRef.current, {
     //     center: props.center,

@@ -35,7 +35,7 @@ const Favorites = () => {
         if (auth.isLoggedIn) {
             fetchFavorites();
         }
-    }, []);
+    }, [auth.isLoggedIn, auth.userId, navigate]);
 
     return (
         <div className="favorites bg-2">

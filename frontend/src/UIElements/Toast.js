@@ -11,9 +11,9 @@ const Toast = ({ message }) => {
   return (
     <>
       {showToast && (
-        <div className="toast">
+        <div className="toast bg-2">
           <div className="toast__message">{message}</div>
-          <button className="toast__close" onClick={handleClose}>
+          <button className="toast__close hl-1" onClick={handleClose}>
             &times;
           </button>
         </div>
