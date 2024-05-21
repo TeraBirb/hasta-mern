@@ -24,15 +24,17 @@ const Map = (props) => {
         //   className={`map ${props.className}`}
         //   style={props.style}
         // ></div>
-        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
-            <GoogleMap
-                center={center}
-                zoom={zoom}
-                mapContainerStyle={{ width: "100%", height: "100%" }}
-            >
-                <Marker position={center} />
-            </GoogleMap>
-        </LoadScript>
+        <div className="map">
+            <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
+                <GoogleMap
+                    center={center}
+                    zoom={zoom}
+                    mapContainerStyle={{ width: "100%", height: "100%" }}
+                >
+                    <Marker position={center} />
+                </GoogleMap>
+            </LoadScript>
+        </div>
     );
 };
 

@@ -111,7 +111,7 @@ const Listing = () => {
     return (
         <React.Fragment>
             {!auth.isLoggedIn && <Toast message="Sign up or log in to save this listing!" />}
-            <div className="listing">
+            <div className="listing bg-2">
                 <NavigateBack />
                 <div className="listingImageWrapper">
                     {listing.photos.map((photo, index) => {
@@ -175,7 +175,7 @@ const Listing = () => {
                         href={listing.contact}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="contact"
+                        className="contact hl-1"
                     >
                         Visit the Complete Listing
                     </a>

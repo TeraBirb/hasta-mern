@@ -13,7 +13,7 @@ const NavigateBack = () => {
     return (
         <div className="navigateBack">
             <img
-                className="navigateBackButton"
+                className="navigateBackButton hl-1"
                 src="https://www.svgrepo.com/show/450517/back.svg"
                 alt="back"
                 onClick={handleNavigateBack}
