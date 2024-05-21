@@ -101,7 +101,7 @@ const ResultsList = () => {
                 ))}
             </ul>
             {/* Report Table */}
-            <div className="reportTableWrapper">
+            <div className="reportTableWrapper bg-2">
                 {/* <h2>Rental Prices Report</h2>
                 <p>Report generated on: {currentDateTime}</p> */}
                 <table className="reportTable">

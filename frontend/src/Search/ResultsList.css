@@ -20,7 +20,7 @@
 }
 
 .pagination li {
-    background-color: #47a297;
+    background-color: #005F73;
     border-radius: 50%; /* Make it a circle */
     width: 30px;
     height: 30px;
@@ -38,7 +38,7 @@
     }
 
     &.active {
-        background-color: #f5ff64;
+        background-color: #EE9B00;
         cursor: default;
         pointer-events: none;
     }
@@ -49,7 +49,7 @@
     width: 50vw;
     text-align: center;
     margin-bottom: 10px;
-    background-color: #47a297;
+    /* background-color: #47a297; */
     border-radius: 10px;
     padding: 5px;
     color: white;
