@@ -59,6 +59,10 @@
     margin: 0 0.5rem;
 }
 
+.bed-and-bath option {
+    color: #292929;
+}
+
 @media screen and (max-width: 768px) {
     .search {
         width: 90vw;
@@ -75,6 +79,11 @@
 
     .search__main button {
         margin-top: 1rem;
+    }
+
+    /* Not sure why this is not applying */
+    .filters .filter-item input.filter-input {
+        padding-left: 10px;
     }
 
     .filters .propertyTypes {

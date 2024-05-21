@@ -108,7 +108,11 @@ const Search = () => {
                     placeholder="Enter an address, city, or ZIP code"
                     onInput={(e) => setSearchInput(e.target.value)}
                 />
-                <button className="hl-1" onClick={handleSearch} disabled={isLoading}>
+                <button
+                    className="hl-1"
+                    onClick={handleSearch}
+                    disabled={isLoading}
+                >
                     {isLoading ? <LoadingSpinner /> : "SEARCH"}
                 </button>
             </div>
@@ -117,6 +121,8 @@ const Search = () => {
                 <div className="filter-item">
                     <label htmlFor="">Minimum price:</label>
                     <input
+                        className="filter-input"
+                        // style={{ paddingLeft: "1rem" }}
                         type="text"
                         onInput={(e) => setMinPrice(e.target.value)}
                     />
@@ -124,33 +130,42 @@ const Search = () => {
                 <div className="filter-item">
                     <label htmlFor="">Maximum price:</label>
                     <input
+                        className="filter-input"
                         type="text"
                         onInput={(e) => setMaxPrice(e.target.value)}
                     />
                 </div>
                 <div className="filter-item">
-                    <label htmlFor="">Bedrooms:</label>
-                    <select
-                        value={minBedrooms}
-                        onChange={(e) => setMinBedrooms(e.target.value)}
-                    >
-                        <option value="any">any</option>
-                        <option value="1">1+</option>
-                        <option value="2">2+</option>
-                        <option value="3">3+</option>
-                        <option value="4">4+</option>
-                    </select>
-                    <label htmlFor="">Bathrooms:</label>
-                    <select
-                        value={minBathrooms}
-                        onChange={(e) => setMinBathrooms(e.target.value)}
-                    >
-                        <option value="any">any</option>
-                        <option value="1">1+</option>
-                        <option value="2">2+</option>
-                        <option value="3">3+</option>
-                        <option value="4">4+</option>
-                    </select>
+                    <div className="bed-and-bath">
+                        <div className="bed-filter">
+                            <label htmlFor="">Bedrooms:</label>
+                            <select
+                                value={minBedrooms}
+                                onChange={(e) => setMinBedrooms(e.target.value)}
+                            >
+                                <option value="any">any</option>
+                                <option value="1">1+</option>
+                                <option value="2">2+</option>
+                                <option value="3">3+</option>
+                                <option value="4">4+</option>
+                            </select>
+                        </div>
+                        <div className="bath-filter">
+                            <label htmlFor="">Bathrooms:</label>
+                            <select
+                                value={minBathrooms}
+                                onChange={(e) =>
+                                    setMinBathrooms(e.target.value)
+                                }
+                            >
+                                <option value="any">any</option>
+                                <option value="1">1+</option>
+                                <option value="2">2+</option>
+                                <option value="3">3+</option>
+                                <option value="4">4+</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div className="filter-item">
                     <label htmlFor="">Property Type:</label>

@@ -12,8 +12,8 @@
   height: 32px;
   margin: 1px auto;
   border-radius: 50%;
-  border: 5px solid rgb(184, 206, 203);
-  border-color: rgb(184, 206, 203) transparent rgb(184, 206, 203) transparent;
+  border: 5px solid #005F73;
+  border-color: #005F73 transparent #005F73 transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 

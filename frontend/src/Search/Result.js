@@ -12,7 +12,6 @@ const Result = (props) => {
 
     const handleClick = () => {
         console.log("Clicked!");
-        // after we set up backend, we will navigate to specific listing
         navigate("/listing/" + props.id, { state: props });
         window.scrollTo(0, 0);
     };
@@ -36,9 +35,9 @@ const Result = (props) => {
                         props.description.baths ||
                         props.description.baths_min ||
                         props.description.baths_max
-                    } Bath ${capitalizeFirstLetter(
-                        props.description.type
-                    ).replace(/_/g, "-")}`}</h3>
+                    } Bath ${capitalizeFirstLetter(props.description.type)
+                        .replace(/_/g, "-") // replace underscores with hyphens and remove 's' from end of string
+                        .replace(/s$/, "")}`}</h3>
                     <p>{`$${props.price}`}</p>
                     <p>{streetAddress}</p>
                     <p>{cityState}</p>
