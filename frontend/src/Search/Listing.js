@@ -160,7 +160,7 @@ const Listing = () => {
                                 lat: address.coordinate.lat,
                                 lng: address.coordinate.lon,
                             }}
-                            zoom={16}
+                            zoom={10}
                         />
                     </div>
                     <hr />

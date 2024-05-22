@@ -102,11 +102,12 @@
     color: black;
     /* background-color: #f5ff64; */
     padding: 0.5rem;
-    width: 50%;
+    width: 100%;
     border-radius: 15px;
     text-align: center;
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 1);   
+    margin: 0 auto;
 }
 
 .listing .contact:hover {
