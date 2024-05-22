@@ -42,7 +42,7 @@ const Search = () => {
     }, []);
 
     const handleSearch = async () => {
-        console.log("Searching...");
+        // console.log("Searching...");
         setIsLoading(true);
 
         try {
@@ -63,7 +63,7 @@ const Search = () => {
                 }
             );
 
-            console.log(response);
+            // console.log(response);
 
             // Redirect to results page
             navigate("/results", { state: { data: response.data } });

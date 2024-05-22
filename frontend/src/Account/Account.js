@@ -58,9 +58,9 @@ const Account = () => {
     // Resetting username or password
     const resetHandler = async (event) => {
         event.preventDefault();
-        console.log("Resetting...");
+        // console.log("Resetting...");
         try {
-            const response = await axios.patch(
+            await axios.patch(
                 process.env.REACT_APP_BACKEND_URL + "/user/change-credentials",
                 {
                     currentUsername,
@@ -75,7 +75,7 @@ const Account = () => {
                     },
                 }
             );
-            console.log(response);
+            // console.log(response);
             // auth.logout();
             // auth.login(response.data.userId, response.data.token);
             navigate("/");

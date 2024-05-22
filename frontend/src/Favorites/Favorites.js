@@ -24,7 +24,7 @@ const Favorites = () => {
                     throw new Error(data);
                 }
 
-                console.log(data);
+                // console.log(data);
                 navigate("/results", { state: { data: data } });
                 window.scrollTo(0, 0);
             } catch (err) {

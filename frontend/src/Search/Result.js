@@ -11,7 +11,7 @@ const Result = (props) => {
     const cityState = `${address.city}, ${address.state_code}`;
 
     const handleClick = () => {
-        console.log("Clicked!");
+        // console.log("Clicked!");
         navigate("/listing/" + props.id, { state: props });
         window.scrollTo(0, 0);
     };

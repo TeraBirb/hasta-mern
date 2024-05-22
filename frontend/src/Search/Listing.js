@@ -61,7 +61,7 @@ const Listing = () => {
 
     const handleFavorite = async () => {
         if (!auth.isLoggedIn) {
-            console.log("log in first!");
+            // console.log("log in first!");
             return;
         }
         setIsFavorite((prevIsFavorite) => !prevIsFavorite);
@@ -69,7 +69,7 @@ const Listing = () => {
         // add or remove from user's favorites
         if (isFavorite) {
             // remove from favorites
-            console.log("removing");
+            // console.log("removing");
             try {
                 await axios.delete(
                     process.env.REACT_APP_BACKEND_URL +
@@ -89,7 +89,7 @@ const Listing = () => {
         } else {
             // add to favorites
             try {
-                console.log(listing.id);
+                // console.log(listing.id);
                 await axios.patch(
                     process.env.REACT_APP_BACKEND_URL + "/listing/save",
                     {

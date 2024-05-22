@@ -51,7 +51,7 @@ const Authenticate = () => {
     // User logging in
     const loginHandler = async () => {
         if (isLoginMode) {
-            console.log("Logging in...");
+            // console.log("Logging in...");
             try {
                 const response = await axios.post(
                     process.env.REACT_APP_BACKEND_URL + "/user/login",
@@ -65,7 +65,7 @@ const Authenticate = () => {
                         },
                     }
                 );
-                console.log(response);
+                // console.log(response);
                 auth.login(response.data.userId, response.data.token);
                 navigate("/");
             } catch (err) {
@@ -77,7 +77,7 @@ const Authenticate = () => {
 
     const signupHandler = async () => {
         if (!isLoginMode) {
-            console.log("Signing up...");
+            // console.log("Signing up...");
             try {
                 const response = await axios.post(
                     process.env.REACT_APP_BACKEND_URL + "/user/signup",
@@ -92,7 +92,7 @@ const Authenticate = () => {
                         },
                     }
                 );
-                console.log(response);
+                // console.log(response);
                 auth.login(response.data.userId, response.data.token);
                 navigate("/");
             } catch (err) {
