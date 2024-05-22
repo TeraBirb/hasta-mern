@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../Context/auth-context";
 import "./NavLinks.css";
 
+// Class-based component for demonstartion purposes, can be converted to functional component
 class NavLinks extends Component {
     static contextType = AuthContext;
 
@@ -12,7 +13,7 @@ class NavLinks extends Component {
         return (
             <ul className="nav-links">
                 <li>
-                    <NavLink to="/" exact>
+                    <NavLink to="/">
                         HOME
                     </NavLink>
                 </li>
