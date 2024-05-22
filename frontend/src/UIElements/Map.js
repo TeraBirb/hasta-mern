@@ -1,4 +1,4 @@
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
 
 import "./Map.css";
 
@@ -18,13 +18,12 @@ const Map = (props) => {
     // }, [center, zoom]);
 
     return (
-        // <div
-        //   ref={mapRef}
-        //   className={`map ${props.className}`}
-        //   style={props.style}
-        // ></div>
+        // LoadScriptNext should load asynchronously by default. Ignore console warning "Google Maps JavaScript API has been loaded directly without loading=async.".
         <div className="map">
-            <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
+            <LoadScriptNext
+                googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
+                loadingElement={<div>Loading...</div>}
+            >
                 <GoogleMap
                     center={center}
                     zoom={zoom}
@@ -32,7 +31,7 @@ const Map = (props) => {
                 >
                     <Marker position={center} />
                 </GoogleMap>
-            </LoadScript>
+            </LoadScriptNext>
         </div>
     );
 };
