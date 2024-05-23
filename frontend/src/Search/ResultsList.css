@@ -1,7 +1,7 @@
 .resultsListWrapper {
     /* background-color: cadetblue; */
     margin: 0 auto;
-    width: 80vw;
+    width: 80%;
 }
 
 .resultsList {
@@ -46,7 +46,7 @@
 
 .reportTableWrapper {
     margin: 0 auto;
-    width: 50vw;
+    width: 50%;
     text-align: center;
     margin-bottom: 10px;
     /* background-color: #47a297; */
@@ -62,7 +62,7 @@
 @media (max-width: 768px) {
     /* mobile */
     .resultsListWrapper {
-        width: 90vw;
+        width: 90%;
     }
 
     .resultsList {

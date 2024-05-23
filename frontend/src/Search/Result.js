@@ -23,9 +23,19 @@ const Result = (props) => {
     return (
         <div className="results">
             <div className="resultBox bg-2" onClick={handleClick}>
-                <img src="" alt="" />
                 <div className="resultInfo">
-                    <img src={props.photos[0].href} alt="Listing" />
+                    <img
+                        className="resultInfoImage"
+                        src={props.photos[0].href}
+                        // temporary fix for image size in mobile devices
+                        // will be replaced when migrating to Tailwind CSS
+                        style={{ 
+                            height: "auto", 
+                            width: "100%", 
+                            borderRadius: "5px" 
+                        }} 
+                        alt="Listing"
+                    />
                     {/* `${result.description.beds} Bed, ${result.description.baths} Bath ${result.description.type}` */}
                     <h3>{`${
                         props.description.beds ||

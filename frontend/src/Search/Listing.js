@@ -133,10 +133,12 @@ const Listing = () => {
                         onClick={handleFavorite}
                     />
                     {/* <h2>{listing.title}</h2> */}
-                    <h3>{`$${listing.price || NO_INFO}`}</h3>
-                    <h4>{streetAddress || NO_INFO}</h4>
-                    <h4>{cityState || NO_INFO}</h4>
-                    <h4>
+                    {/* Temporary inline style due to mobile visual bug: elements with dynamically loaded data not implementing css styles */}
+                    {/* Will be replaced when migrating to Tailwind CSS */}
+                    <h3 style={{margin: 0}}>{`$${listing.price || NO_INFO}`}</h3>
+                    <h4 style={{margin: 0}}>{streetAddress || NO_INFO}</h4>
+                    <h4 style={{margin: 0}}>{cityState || NO_INFO}</h4>
+                    <h4 style={{margin: 0}}>
                         {`${
                             listing.description.beds ||
                             listing.description.beds_min ||
@@ -147,7 +149,7 @@ const Listing = () => {
                             listing.description.baths_max
                         } Bath`}
                     </h4>
-                    <h4>
+                    <h4 style={{margin: 0}}>
                         {listing.description.sqft ||
                             listing.description.sqft_min ||
                             listing.description.sqft_max ||

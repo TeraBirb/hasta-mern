@@ -4,14 +4,15 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 80vw;
-    margin: 0 auto;
+    /* width: 80vw; */
+    width: 30%;
+    margin: 5px 15px;
     padding: 0;
     list-style: none;
 }
 
 .resultBox {
-    color: white;
+    /* color: white; */
     /* background-color: #47A297; */
     margin: 10px auto;
     padding: 10px;
@@ -26,10 +27,10 @@
         transform: scale(1.05);
     }
 
-    img {
-        width: 100%;
+    .resultInfo .resultInfoImage {
         height: auto;
-        max-height: 640px;
+        width: 100%;
+        /* max-height: 640px; */
         border-radius: 5px;
     }
 
@@ -39,11 +40,11 @@
     }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .results {
-        width: 25vw;
-    }
-    .resultBox {
-        width: 20vw;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        width: 100%;
     }
 }
