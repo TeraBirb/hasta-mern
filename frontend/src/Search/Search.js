@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import LoadingSpinner from "../UIElements/LoadingSpinner";
+import Toast from "../UIElements/Toast";
 
 import "./Search.css";
 
@@ -83,91 +84,98 @@ const Search = () => {
     };
 
     return (
-        <div className="search bg-2">
-            <h1>Browse homes and apartments for rent</h1>
-            <div className="search__main">
-                <input
-                    type="text"
-                    placeholder="Enter an address, city, or ZIP code"
-                    onInput={(e) => setSearchInput(e.target.value)}
-                />
-                <button
-                    className="hl-1"
-                    onClick={handleSearch}
-                    disabled={isLoading}
-                >
-                    {isLoading ? <LoadingSpinner /> : "SEARCH"}
-                </button>
-            </div>
+        <>
+            <Toast message="Just a heads up—our server takes a nap when it’s not busy. So, the first search might take up to a minute to wake it up. Thanks for hanging in there with us!"/>
+            <div className="search bg-2">
+                <h1>Browse homes and apartments for rent</h1>
+                <div className="search__main">
+                    <input
+                        type="text"
+                        placeholder="Enter an address, city, or ZIP code"
+                        onInput={(e) => setSearchInput(e.target.value)}
+                    />
+                    <button
+                        className={`hl-1 ${isLoading ? 'shimmering-btn' : ''}`}
+                        onClick={handleSearch}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? <LoadingSpinner /> : "SEARCH"}
+                    </button>
+                </div>
 
-            <div className="filters">
-                <div className="filter-item">
-                    <label htmlFor="">Minimum price:</label>
-                    <input
-                        className="filter-input"
-                        // style={{ paddingLeft: "1rem" }}
-                        type="text"
-                        onInput={(e) => setMinPrice(e.target.value)}
-                    />
-                </div>
-                <div className="filter-item">
-                    <label htmlFor="">Maximum price:</label>
-                    <input
-                        className="filter-input"
-                        type="text"
-                        onInput={(e) => setMaxPrice(e.target.value)}
-                    />
-                </div>
-                <div className="filter-item">
-                    <div className="bed-and-bath">
-                        <div className="bed-filter">
-                            <label htmlFor="">Bedrooms:</label>
-                            <select
-                                value={minBedrooms}
-                                onChange={(e) => setMinBedrooms(e.target.value)}
-                            >
-                                <option value="any">any</option>
-                                <option value="1">1+</option>
-                                <option value="2">2+</option>
-                                <option value="3">3+</option>
-                                <option value="4">4+</option>
-                            </select>
-                        </div>
-                        <div className="bath-filter">
-                            <label htmlFor="">Bathrooms:</label>
-                            <select
-                                value={minBathrooms}
-                                onChange={(e) =>
-                                    setMinBathrooms(e.target.value)
-                                }
-                            >
-                                <option value="any">any</option>
-                                <option value="1">1+</option>
-                                <option value="2">2+</option>
-                                <option value="3">3+</option>
-                                <option value="4">4+</option>
-                            </select>
+                <div className="filters">
+                    <div className="filter-item">
+                        <label htmlFor="">Minimum price:</label>
+                        <input
+                            className="filter-input"
+                            // style={{ paddingLeft: "1rem" }}
+                            type="text"
+                            onInput={(e) => setMinPrice(e.target.value)}
+                        />
+                    </div>
+                    <div className="filter-item">
+                        <label htmlFor="">Maximum price:</label>
+                        <input
+                            className="filter-input"
+                            type="text"
+                            onInput={(e) => setMaxPrice(e.target.value)}
+                        />
+                    </div>
+                    <div className="filter-item">
+                        <div className="bed-and-bath">
+                            <div className="bed-filter">
+                                <label htmlFor="">Bedrooms:</label>
+                                <select
+                                    value={minBedrooms}
+                                    onChange={(e) =>
+                                        setMinBedrooms(e.target.value)
+                                    }
+                                >
+                                    <option value="any">any</option>
+                                    <option value="1">1+</option>
+                                    <option value="2">2+</option>
+                                    <option value="3">3+</option>
+                                    <option value="4">4+</option>
+                                </select>
+                            </div>
+                            <div className="bath-filter">
+                                <label htmlFor="">Bathrooms:</label>
+                                <select
+                                    value={minBathrooms}
+                                    onChange={(e) =>
+                                        setMinBathrooms(e.target.value)
+                                    }
+                                >
+                                    <option value="any">any</option>
+                                    <option value="1">1+</option>
+                                    <option value="2">2+</option>
+                                    <option value="3">3+</option>
+                                    <option value="4">4+</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="filter-item">
-                    <label htmlFor="">Property Type:</label>
-                    <div className="propertyTypes">
-                        {Object.entries(propertyTypes).map(([key, value]) => (
-                            <label key={key}>
-                                <input
-                                    type="checkbox"
-                                    name={key}
-                                    checked={value}
-                                    onChange={handleCheckboxChange}
-                                />
-                                {key.replace("_", "-")}
-                            </label>
-                        ))}
+                    <div className="filter-item">
+                        <label htmlFor="">Property Type:</label>
+                        <div className="propertyTypes">
+                            {Object.entries(propertyTypes).map(
+                                ([key, value]) => (
+                                    <label key={key}>
+                                        <input
+                                            type="checkbox"
+                                            name={key}
+                                            checked={value}
+                                            onChange={handleCheckboxChange}
+                                        />
+                                        {key.replace("_", "-")}
+                                    </label>
+                                )
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

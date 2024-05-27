@@ -8,7 +8,7 @@
     /* background-color: rgb(71, 162, 151); */
     /* background-color: #799654; */
     width: 50vw;
-    margin: 7rem auto;
+    margin: 2rem auto;
     text-align: center;
     border-radius: 10px;
     padding: 1rem;
@@ -42,6 +42,27 @@
     color: #292929;
     cursor: pointer;
 }
+
+.shimmering-btn {
+    background: linear-gradient(
+        to right,
+        #EE9B00 20%,
+        #ffffff 40%,
+        #EE9B00 60%,
+        #EE9B00 100%
+      );
+      background-size: 200% auto;
+      animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
 
 .search input, .search select{
     color: #292929;
