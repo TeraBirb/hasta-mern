@@ -93,6 +93,8 @@ const ResultsList = () => {
                     <li
                         key={pageNumber}
                         className={pageNumber === currentPage ? "active" : ""}
+                        // temporary workaround for mobile style not showing active page
+                        style={pageNumber === currentPage ? { backgroundColor: "#EE9B00" } : {}}
                         onClick={() => handlePageChange(pageNumber)}
                     >
                         {pageNumber}
