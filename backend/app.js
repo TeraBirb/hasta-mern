@@ -14,15 +14,15 @@ app.use(bodyParser.json());
 
 // middleware for CORS
 app.use((req, res, next) => {
-    // cant lock down API access, e.g. Postman still works
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-    
-    next();
+  // cant lock down API access, e.g. Postman still works
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+
+  next();
 });
 
 // import logic from routes,
@@ -32,18 +32,20 @@ app.use("/api/user", userRoutes);
 
 // middleware handling all requests that dont match any routes
 app.use((req, res, next) => {
-    throw new Error("Could not find this route.");
+  throw new Error("Could not find this route.");
 });
 
-
 // connects to "hasta" db
-const url =
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.rxibjsv.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
+// const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.rxibjsv.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
+
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.rxibjsv.mongodb.net/?appName=Cluster0`;
+// const url = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-shard-00-00.rxibjsv.mongodb.net:27017,cluster0-shard-00-01.rxibjsv.mongodb.net:27017,cluster0-shard-00-02.rxibjsv.mongodb.net:27017/mydb?ssl=true&replicaSet=atlas-xxxx&authSource=admin&retryWrites=true&w=majority`;
+
 mongoose
-    .connect(url)
-    .then(() => {
-        app.listen(process.env.PORT || 5001);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+  .connect(url)
+  .then(() => {
+    app.listen(process.env.PORT || 5001);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
