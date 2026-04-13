@@ -1,64 +1,66 @@
-import "./Map.css";
+// import "./Map.css";
 
-const Map = (props) => {
-    // const mapRef = useRef();
+// const Map = (props) => {
+//     // const mapRef = useRef();
 
-    const { center, zoom } = props;
+//     const { center, zoom } = props;
 
-    // // v1, No longer necessary due to LoadScript
-    // useEffect(() => {
-    //   const map = new window.google.maps.Map(mapRef.current, {
-    //     center: props.center,
-    //     zoom: props.zoom,
-    //   });
+//     console.log("Map props:", props);
 
-    //   new window.google.maps.Marker({ position: props.center, map: map });
-    // }, [center, zoom]);
+//     // // v1, No longer necessary due to LoadScript
+//     // useEffect(() => {
+//     //   const map = new window.google.maps.Map(mapRef.current, {
+//     //     center: props.center,
+//     //     zoom: props.zoom,
+//     //   });
 
-    // v3, uses new recommended way to load Google Maps API
-    const initMap = async () => {
-        /* eslint-disable no-undef */
-        // google is defined in index.html as a script tag loading the Google Maps API asynchronously
-        // the app still works without the eslint-disable comment, however a warning is shown in the console
-        const { Map } = await google.maps.importLibrary("maps");
-        const { AdvancedMarkerElement } = await google.maps.importLibrary(
-            "marker"
-        );
+//     //   new window.google.maps.Marker({ position: props.center, map: map });
+//     // }, [center, zoom]);
 
-        const map = new Map(document.getElementById("map"), {
-            center: center,
-            zoom: zoom,
-            mapId: "mapId",
-        });
+//     // v3, uses new recommended way to load Google Maps API
+//     const initMap = async () => {
+//         /* eslint-disable no-undef */
+//         // google is defined in index.html as a script tag loading the Google Maps API asynchronously
+//         // the app still works without the eslint-disable comment, however a warning is shown in the console
+//         const { Map } = await google.maps.importLibrary("maps");
+//         const { AdvancedMarkerElement } = await google.maps.importLibrary(
+//             "marker"
+//         );
 
-        new AdvancedMarkerElement({
-            map: map,
-            position: center,
-        });
-    };
+//         const map = new Map(document.getElementById("map"), {
+//             center: center,
+//             zoom: zoom,
+//             mapId: "mapId",
+//         });
 
-    initMap();
+//         new AdvancedMarkerElement({
+//             map: map,
+//             position: center,
+//         });
+//     };
 
-    return (
-        //  //v2, LoadScriptNext should load asynchronously by default. Ignore console warning "Google Maps JavaScript API has been loaded directly without loading=async.".
-        // <div className="map">
-        //     <LoadScriptNext
-        //         googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
-        //         loadingElement={<div>Loading...</div>}
-        //     >
-        //         <GoogleMap
-        //             center={center}
-        //             zoom={zoom}
-        //             mapContainerStyle={{ width: "100%", height: "100%" }}
-        //         >
-        //             <Marker position={center} />
-        //         </GoogleMap>
-        //     </LoadScriptNext>
-        // </div>
+//     initMap();
 
-        // v3, uses new recommended way to load Google Maps API
-        <div id="map"></div>
-    );
-};
+//     return (
+//         //  //v2, LoadScriptNext should load asynchronously by default. Ignore console warning "Google Maps JavaScript API has been loaded directly without loading=async.".
+//         // <div className="map">
+//         //     <LoadScriptNext
+//         //         googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}
+//         //         loadingElement={<div>Loading...</div>}
+//         //     >
+//         //         <GoogleMap
+//         //             center={center}
+//         //             zoom={zoom}
+//         //             mapContainerStyle={{ width: "100%", height: "100%" }}
+//         //         >
+//         //             <Marker position={center} />
+//         //         </GoogleMap>
+//         //     </LoadScriptNext>
+//         // </div>
 
-export default Map;
+//         // v3, uses new recommended way to load Google Maps API
+//         <div id="map"></div>
+//     );
+// };
+
+// export default Map;
