@@ -5,10 +5,9 @@ import "./Result.css";
 const Result = (props) => {
     const navigate = useNavigate();
     const address = props.location.address;
-    const streetAddress = `${address.street_number} ${address.street_name} ${
-        address.street_suffix || ""
-    } ${address.unit || ""}`;
+    const streetAddress = address.line;
     const cityState = `${address.city}, ${address.state_code}`;
+    const rentalType = props.description.type !== "other" ? props.description.type.replace(/_/g, " ") : "";
 
     const handleClick = () => {
         // console.log("Clicked!");
@@ -45,9 +44,7 @@ const Result = (props) => {
                         props.description.baths ||
                         props.description.baths_min ||
                         props.description.baths_max
-                    } Bath ${capitalizeFirstLetter(props.description.type)
-                        .replace(/_/g, "-") // replace underscores with hyphens and remove 's' from end of string
-                        .replace(/s$/, "")}`}</h3>
+                    } Bath ${capitalizeFirstLetter(rentalType)}`}</h3>
                     <p>{`$${props.price}`}</p>
                     <p>{streetAddress}</p>
                     <p>{cityState}</p>
