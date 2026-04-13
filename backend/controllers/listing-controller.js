@@ -103,10 +103,18 @@ const searchListings = async (req, res, next) => {
             )}&key=${process.env.GOOGLE_API_KEY}`
         );
 
+        if (!geocodingResponse) return next(new Error("No response from Geocoding."));
+
         // INSERT ERROR HANDLING HERE FOR NO RESULTS FOUND
         if (geocodingResponse.data.status === "ZERO_RESULTS") {
             return next(new Error("No results found for your search."));
         }
+
+        if (geocodingResponse.data.status !== "OK") {
+            console.log(`Geocoding response: ${JSON.stringify(geocodingResponse.data)}`);
+            return next(new Error("Error with Geocoding API."));
+        }
+
 
         const suggestedCity =
             geocodingResponse.data.results[0].address_components[0].long_name;
@@ -115,7 +123,7 @@ const searchListings = async (req, res, next) => {
 
         const options = {
             method: "GET",
-            url: "https://us-real-estate.p.rapidapi.com/v2/for-rent",
+            url: "https://us-real-estate.p.rapidapi.com/v3/for-rent",
             params: {
                 city: suggestedCity,
                 state_code: suggestedStateCode,
@@ -135,6 +143,7 @@ const searchListings = async (req, res, next) => {
 
         // Make the second request
         const response = await axios.request(options);
+        console.log("response", response);
         const results = response.data.data.home_search.results;
         // console.log(results);
 
